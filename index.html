@@ -13,9 +13,10 @@
                 extend: {
                     colors: {
                         exitoYellow: '#FFE600',
-                        exitoBlue: '#002B5E',
-                        exitoDarkBlue: '#001A3A',
-                        corpGray: '#F4F7FE', /* Gris más suave y moderno */
+                        exitoBlack: '#000000',
+                        exitoDark: '#1A1A1A',
+                        corpGray: '#F5F5F5',
+                        exitoRed: '#E30613',
                         aiPurple: '#8B5CF6'
                     },
                     fontFamily: {
@@ -32,113 +33,121 @@
         .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
         .animate-pulse-fast { animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        .nav-item.active { background-color: #FFE600; color: #002B5E; border-left: 5px solid #001A3A; font-weight: 700;}
-        .nav-item { transition: all 0.3s ease; border-left: 5px solid transparent; color: #9CA3AF; }
-        .nav-item:hover:not(.active) { background-color: #001A3A; color: white; }
+        
+        /* Sidebar Navigation - Estilo Éxito */
+        .nav-item.active { background-color: #FFE600; color: #000000; font-weight: 800; border-radius: 0.5rem; margin: 0 0.5rem; }
+        .nav-item { transition: all 0.3s ease; color: #9CA3AF; margin: 0 0.5rem; border-radius: 0.5rem; }
+        .nav-item:hover:not(.active) { background-color: #1A1A1A; color: white; }
+        
         details > summary { list-style: none; }
         details > summary::-webkit-details-marker { display: none; }
-        .clickable-row:hover { background-color: #F8FAFC; cursor: pointer; transform: scale(1.01); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); z-index: 10; position: relative; transition: all 0.2s; }
-        /* Sombras suaves para tarjetas */
-        .glass-card { background: white; border-radius: 1rem; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid rgba(226, 232, 240, 0.8); }
+        .clickable-row:hover { background-color: #F9FAFB; cursor: pointer; transform: scale(1.01); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); z-index: 10; position: relative; transition: all 0.2s; }
+        
+        /* Tarjetas con estilo Retail Moderno (Éxito.com) */
+        .glass-card { background: white; border-radius: 0.75rem; box-shadow: 0 2px 15px rgba(0,0,0,0.04); border: 1px solid #E5E7EB; }
+        .btn-primary { background-color: #FFE600; color: #000000; font-weight: 800; border-radius: 0.5rem; transition: all 0.2s; }
+        .btn-primary:hover { background-color: #E6CF00; transform: translateY(-1px); }
+        .btn-secondary { background-color: #000000; color: #FFFFFF; font-weight: 800; border-radius: 0.5rem; transition: all 0.2s; }
+        .btn-secondary:hover { background-color: #1A1A1A; transform: translateY(-1px); }
     </style>
 </head>
 <body class="bg-corpGray text-slate-800 font-sans h-screen overflow-hidden flex flex-col md:flex-row relative">
 
-    <!-- ================= MODALES (OVERLAYS) ================= -->
+    <!-- OVERLAYS Y MODALES FRONTEND (CUSTOMER 360, LOGISTICA, ETC) -->
     
     <!-- Modal Customer 360 -->
-    <div id="customer-360-modal" class="hidden fixed inset-0 z-[80] bg-exitoDarkBlue bg-opacity-90 flex justify-center items-center p-4 animate-fade-in backdrop-blur-sm">
+    <div id="customer-360-modal" class="hidden fixed inset-0 z-[80] bg-black bg-opacity-70 flex justify-center items-center p-4 animate-fade-in backdrop-blur-sm">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl overflow-hidden flex flex-col">
-            <div class="bg-exitoBlue text-white p-5 flex justify-between items-center">
+            <div class="bg-exitoBlack text-white p-5 flex justify-between items-center border-b-4 border-exitoYellow">
                 <h3 class="font-black text-lg"><i class="fas fa-id-card text-exitoYellow mr-2"></i> Perfil Customer 360</h3>
                 <button onclick="closeModal('customer-360-modal')" class="text-white hover:text-exitoYellow transition-colors"><i class="fas fa-times text-xl"></i></button>
             </div>
             <div class="p-8 overflow-y-auto max-h-[80vh] space-y-6">
-                <div class="flex justify-between items-start border-b border-slate-100 pb-4">
+                <div class="flex justify-between items-start border-b border-slate-200 pb-4">
                     <div>
-                        <h2 id="c360-name" class="text-3xl font-black text-exitoBlue">Nombre Cliente</h2>
-                        <p id="c360-type" class="text-sm font-bold text-slate-500 mt-1 bg-slate-100 inline-block px-2 py-1 rounded">Tipo B2B/B2C</p>
+                        <h2 id="c360-name" class="text-3xl font-black text-exitoBlack">Nombre Cliente</h2>
+                        <p id="c360-type" class="text-xs font-bold text-slate-600 mt-2 bg-slate-100 border border-slate-200 inline-block px-3 py-1 rounded-full uppercase tracking-wider">Tipo B2B/B2C</p>
                     </div>
                     <div class="text-right">
-                        <p class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">LTV (Valor Vida)</p>
-                        <p id="c360-ltv" class="text-2xl font-black text-green-600">$0M</p>
+                        <p class="text-[10px] text-slate-500 uppercase font-bold tracking-widest">LTV (Valor Vida)</p>
+                        <p id="c360-ltv" class="text-2xl font-black text-exitoRed">$0M</p>
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-6">
-                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 shadow-inner">
-                        <p class="text-[10px] text-slate-500 font-bold uppercase mb-1">Clasificación RFM</p>
-                        <p id="c360-rfm" class="text-lg font-black text-slate-800">Cargando...</p>
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200">
+                        <p class="text-[10px] text-slate-500 font-bold uppercase mb-1 tracking-widest">Clasificación RFM</p>
+                        <p id="c360-rfm" class="text-lg font-black text-exitoBlack">Cargando...</p>
                     </div>
-                    <div class="bg-red-50 p-5 rounded-xl border border-red-200 relative overflow-hidden shadow-inner">
-                        <p class="text-[10px] text-red-500 font-bold uppercase mb-1">Riesgo de Fuga (Churn Rate)</p>
-                        <p id="c360-churn" class="text-3xl font-black text-red-600">--%</p>
-                        <i class="fas fa-exclamation-triangle absolute -right-4 -bottom-4 text-6xl text-red-100 opacity-50"></i>
+                    <div class="bg-red-50 p-5 rounded-xl border border-red-200 relative overflow-hidden">
+                        <p class="text-[10px] text-red-600 font-bold uppercase mb-1 tracking-widest">Riesgo de Fuga (Churn Rate)</p>
+                        <p id="c360-churn" class="text-3xl font-black text-exitoRed">--%</p>
+                        <i class="fas fa-exclamation-triangle absolute -right-4 -bottom-4 text-6xl text-red-100 opacity-60"></i>
                     </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="border border-slate-200 rounded-xl p-5 bg-white">
-                        <p class="font-bold text-sm text-exitoBlue border-b border-slate-100 pb-2 mb-3">Últimos Tickets de Compra</p>
+                    <div class="border border-slate-200 rounded-xl p-5 bg-white shadow-sm">
+                        <p class="font-black text-sm text-exitoBlack border-b border-slate-100 pb-2 mb-3">Últimos Tickets de Compra</p>
                         <ul class="text-sm space-y-3 text-slate-600 font-medium" id="c360-tickets"></ul>
                     </div>
-                    <div class="border border-slate-200 rounded-xl p-5 bg-white">
-                        <p class="font-bold text-sm text-exitoBlue border-b border-slate-100 pb-2 mb-3"><i class="fab fa-zoho text-blue-500 mr-2"></i> Historial Zoho CRM</p>
+                    <div class="border border-slate-200 rounded-xl p-5 bg-white shadow-sm">
+                        <p class="font-black text-sm text-exitoBlack border-b border-slate-100 pb-2 mb-3"><i class="fab fa-zoho text-blue-600 mr-2"></i> Historial Zoho CRM</p>
                         <ul class="text-sm space-y-3 text-slate-600 font-medium" id="c360-zoho"></ul>
                     </div>
                 </div>
-                <div class="bg-exitoBlue rounded-xl p-5 border border-exitoDarkBlue shadow-lg">
+                <div class="bg-exitoBlack rounded-xl p-6 border border-slate-800 shadow-lg">
                     <div class="flex justify-between items-center mb-3">
-                        <h4 class="font-bold text-exitoYellow text-sm"><i class="fas fa-robot mr-2"></i> Sugerencia Ejecutiva IA</h4>
-                        <button onclick="alert('Campaña enviada al CRM de HubSpot exitosamente.')" class="bg-exitoYellow text-exitoBlue px-4 py-2 rounded-lg text-xs font-black shadow hover:bg-yellow-400 transition-transform transform hover:scale-105">Ejecutar Campaña</button>
+                        <h4 class="font-black text-exitoYellow text-sm uppercase tracking-wide"><i class="fas fa-robot mr-2"></i> Sugerencia Ejecutiva IA</h4>
+                        <button onclick="alert('Campaña enviada al CRM de HubSpot exitosamente.')" class="btn-primary px-4 py-2 text-xs shadow-md">Ejecutar Campaña</button>
                     </div>
-                    <p id="c360-ai-action" class="text-sm text-blue-50 leading-relaxed font-medium">Analizando comportamiento del cliente...</p>
+                    <p id="c360-ai-action" class="text-sm text-white leading-relaxed font-medium">Analizando comportamiento del cliente...</p>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Modal Auto-Optimización Logística -->
-    <div id="route-optimization-modal" class="hidden fixed inset-0 z-[80] bg-exitoDarkBlue bg-opacity-90 flex justify-center items-center p-4 animate-fade-in backdrop-blur-sm">
+    <div id="route-optimization-modal" class="hidden fixed inset-0 z-[80] bg-black bg-opacity-70 flex justify-center items-center p-4 animate-fade-in backdrop-blur-sm">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden flex flex-col">
-            <div class="bg-exitoBlue text-exitoYellow p-5 flex justify-between items-center">
+            <div class="bg-exitoBlack text-exitoYellow p-5 flex justify-between items-center border-b-4 border-exitoYellow">
                 <h3 class="font-black text-lg"><i class="fas fa-route mr-2"></i> Motor de Rutas IA</h3>
                 <button onclick="closeModal('route-optimization-modal')" class="text-white hover:text-exitoYellow"><i class="fas fa-times text-xl"></i></button>
             </div>
             <div class="p-8 text-center" id="route-content">
-                <i class="fas fa-satellite-dish text-6xl text-blue-400 mb-6 animate-pulse"></i>
-                <h4 class="font-black text-xl text-exitoBlue mb-3">Conectando con Flota GPS...</h4>
+                <i class="fas fa-satellite-dish text-6xl text-exitoBlack mb-6 animate-pulse"></i>
+                <h4 class="font-black text-xl text-exitoBlack mb-3">Conectando con Flota GPS...</h4>
                 <p class="text-sm text-slate-500 mb-6 font-medium">Calculando variables de tráfico, ventanas horarias de clientes y carga volumétrica.</p>
                 <div class="w-full bg-slate-200 rounded-full h-3 mb-4 overflow-hidden">
-                    <div class="bg-green-500 h-3 rounded-full w-2/3 animate-pulse"></div>
+                    <div class="bg-exitoYellow h-3 rounded-full w-2/3 animate-pulse"></div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- ================= LOGIN SCREEN (CON ROLES) ================= -->
-    <div id="login-screen" class="fixed inset-0 z-[100] bg-exitoDarkBlue flex flex-col justify-center items-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl p-10 w-full max-w-md relative z-10 border-t-8 border-exitoYellow">
+    <div id="login-screen" class="fixed inset-0 z-[100] bg-corpGray flex flex-col justify-center items-center p-4">
+        <div class="bg-white rounded-2xl shadow-xl p-10 w-full max-w-md relative z-10 border-t-8 border-exitoYellow border border-slate-200">
             <div class="text-center mb-8">
-                <h1 class="text-5xl font-black italic tracking-tighter text-exitoBlue">éxito</h1>
-                <p class="text-xs font-bold text-white mt-2 uppercase tracking-widest bg-exitoBlue inline-block px-3 py-1 rounded">Enterprise BI 2.0</p>
+                <h1 class="text-6xl font-black italic tracking-tighter text-exitoBlack">éxito</h1>
+                <p class="text-xs font-black text-exitoBlack mt-2 uppercase tracking-widest bg-exitoYellow inline-block px-4 py-1.5 rounded-full">Enterprise BI 2.0</p>
             </div>
             <form onsubmit="handleLogin(event)" class="space-y-5">
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Rol de Acceso (RBAC)</label>
-                    <select class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-exitoBlue focus:ring-2 focus:ring-exitoBlue transition-all">
+                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Rol de Acceso (RBAC)</label>
+                    <select class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-sm font-medium focus:outline-none focus:border-exitoBlack focus:ring-1 focus:ring-exitoBlack transition-all">
                         <option>Director Nacional (Global)</option>
                         <option>Gerente Regional - Villavicencio</option>
                         <option>Gerente Regional - Bogotá</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">ID Corporativo</label>
-                    <input type="email" value="gerencia@exito.com" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-exitoBlue focus:ring-2 focus:ring-exitoBlue transition-all" required>
+                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">ID Corporativo</label>
+                    <input type="email" value="gerencia@exito.com" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-sm font-medium focus:outline-none focus:border-exitoBlack focus:ring-1 focus:ring-exitoBlack transition-all" required>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Contraseña secreta</label>
-                    <input type="password" value="admin123" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-exitoBlue focus:ring-2 focus:ring-exitoBlue transition-all" required>
+                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Contraseña secreta</label>
+                    <input type="password" value="admin123" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 text-sm font-medium focus:outline-none focus:border-exitoBlack focus:ring-1 focus:ring-exitoBlack transition-all" required>
                 </div>
-                <button type="submit" class="w-full bg-exitoYellow hover:bg-yellow-400 text-exitoBlue font-black py-4 rounded-lg shadow-md mt-4 transition-colors text-sm uppercase tracking-wide">
+                <button type="submit" class="w-full btn-primary py-4 mt-6 text-sm uppercase tracking-widest shadow-md">
                     ACCESO SEGURO AL SISTEMA
                 </button>
             </form>
@@ -146,25 +155,25 @@
     </div>
 
     <!-- ================= SIDEBAR ================= -->
-    <aside class="w-full md:w-64 bg-exitoBlue flex flex-col h-auto md:h-full flex-shrink-0 z-20 shadow-2xl border-r border-exitoDarkBlue">
-        <div class="p-6 border-b border-exitoDarkBlue flex items-center justify-between bg-exitoYellow shadow-sm">
-            <h1 class="text-3xl font-black italic tracking-tighter text-exitoBlue">éxito<span class="text-xl not-italic ml-1 font-bold">BI</span></h1>
-            <button class="md:hidden text-exitoBlue text-2xl" onclick="document.getElementById('nav-menu').classList.toggle('hidden')"><i class="fas fa-bars"></i></button>
+    <aside class="w-full md:w-64 bg-exitoBlack flex flex-col h-auto md:h-full flex-shrink-0 z-20 shadow-xl border-r border-exitoDark">
+        <div class="p-6 border-b border-exitoDark flex items-center justify-between bg-exitoBlack">
+            <h1 class="text-4xl font-black italic tracking-tighter text-white">éxito<span class="text-xl not-italic ml-1 font-black text-exitoYellow">BI</span></h1>
+            <button class="md:hidden text-white text-2xl" onclick="document.getElementById('nav-menu').classList.toggle('hidden')"><i class="fas fa-bars"></i></button>
         </div>
         
         <nav id="nav-menu" class="hidden md:flex flex-col flex-1 py-6 overflow-y-auto hide-scrollbar">
-            <p class="px-6 text-[10px] font-bold text-blue-300 uppercase tracking-widest mb-3">Módulos Estratégicos</p>
-            <button onclick="switchTab('rendimiento')" id="nav-rendimiento" class="nav-item active flex items-center gap-4 px-6 py-3.5 text-sm"><i class="fas fa-chart-line w-5 text-center"></i> Rendimiento Global</button>
-            <button onclick="switchTab('crm')" id="nav-crm" class="nav-item flex items-center gap-4 px-6 py-3.5 text-sm"><i class="fas fa-database w-5 text-center"></i> CRM Analítico</button>
-            <button onclick="switchTab('cx')" id="nav-cx" class="nav-item flex items-center gap-4 px-6 py-3.5 text-sm"><i class="fas fa-headset w-5 text-center"></i> Voz del Cliente (CX)</button>
-            <button onclick="switchTab('categorias')" id="nav-categorias" class="nav-item flex items-center gap-4 px-6 py-3.5 text-sm"><i class="fas fa-tags w-5 text-center"></i> Categorías</button>
-            <button onclick="switchTab('logistica')" id="nav-logistica" class="nav-item flex items-center gap-4 px-6 py-3.5 text-sm"><i class="fas fa-truck w-5 text-center"></i> Logística y Rutas</button>
-            <button onclick="switchTab('geo')" id="nav-geo" class="nav-item flex items-center gap-4 px-6 py-3.5 text-sm"><i class="fas fa-map-marker-alt w-5 text-center"></i> Zonas Geográficas</button>
-            <button onclick="switchTab('oportunidades')" id="nav-oportunidades" class="nav-item flex items-center gap-4 px-6 py-3.5 text-sm"><i class="fas fa-lightbulb w-5 text-center"></i> Oportunidades & Tend.</button>
-            <button onclick="switchTab('empleados')" id="nav-empleados" class="nav-item flex items-center gap-4 px-6 py-3.5 text-sm mt-4 border-t border-exitoDarkBlue pt-6"><i class="fas fa-id-badge w-5 text-center"></i> RRHH y Empleados</button>
+            <p class="px-6 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3">Módulos Estratégicos</p>
+            <button onclick="switchTab('rendimiento')" id="nav-rendimiento" class="nav-item active flex items-center gap-4 px-4 py-3.5 text-sm"><i class="fas fa-chart-line w-5 text-center"></i> Rendimiento Global</button>
+            <button onclick="switchTab('crm')" id="nav-crm" class="nav-item flex items-center gap-4 px-4 py-3.5 text-sm"><i class="fas fa-database w-5 text-center"></i> CRM Analítico</button>
+            <button onclick="switchTab('cx')" id="nav-cx" class="nav-item flex items-center gap-4 px-4 py-3.5 text-sm"><i class="fas fa-headset w-5 text-center"></i> Voz del Cliente (CX)</button>
+            <button onclick="switchTab('categorias')" id="nav-categorias" class="nav-item flex items-center gap-4 px-4 py-3.5 text-sm"><i class="fas fa-tags w-5 text-center"></i> Categorías</button>
+            <button onclick="switchTab('logistica')" id="nav-logistica" class="nav-item flex items-center gap-4 px-4 py-3.5 text-sm"><i class="fas fa-truck w-5 text-center"></i> Logística y Rutas</button>
+            <button onclick="switchTab('geo')" id="nav-geo" class="nav-item flex items-center gap-4 px-4 py-3.5 text-sm"><i class="fas fa-map-marker-alt w-5 text-center"></i> Zonas Geográficas</button>
+            <button onclick="switchTab('oportunidades')" id="nav-oportunidades" class="nav-item flex items-center gap-4 px-4 py-3.5 text-sm"><i class="fas fa-lightbulb w-5 text-center"></i> Oportunidades & Tend.</button>
+            <button onclick="switchTab('empleados')" id="nav-empleados" class="nav-item flex items-center gap-4 px-4 py-3.5 text-sm mt-4 border-t border-exitoDark pt-6"><i class="fas fa-id-badge w-5 text-center"></i> RRHH y Empleados</button>
             
-            <div class="mt-auto p-5 bg-exitoDarkBlue border-t border-blue-900 mt-6 shadow-inner">
-                <p class="text-[10px] text-blue-300 font-bold uppercase tracking-widest mb-3">Conectores API Activos</p>
+            <div class="mt-auto p-5 bg-exitoDark border-t border-exitoBlack mt-6 shadow-inner">
+                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-3">Conectores API Activos</p>
                 <div class="flex gap-4 text-xl">
                     <i class="fab fa-salesforce text-blue-400 hover:scale-110 transition-transform" title="Salesforce"></i>
                     <i class="fab fa-hubspot text-orange-500 hover:scale-110 transition-transform" title="HubSpot"></i>
@@ -178,14 +187,14 @@
     <main class="flex-1 overflow-y-auto relative h-full bg-corpGray" id="main-scroll-area">
         
         <!-- HEADER TOP -->
-        <header class="bg-white px-8 py-4 border-b border-slate-200 flex flex-wrap justify-between items-center sticky top-0 z-[40] shadow-sm gap-4">
+        <header class="bg-white px-8 py-5 border-b border-slate-200 flex flex-wrap justify-between items-center sticky top-0 z-[40] shadow-sm gap-4">
             <div>
-                <h2 id="header-title" class="text-3xl font-black text-exitoBlue tracking-tight">Rendimiento Global</h2>
+                <h2 id="header-title" class="text-3xl font-black text-exitoBlack tracking-tight">Rendimiento Global</h2>
                 <p id="header-subtitle" class="text-sm font-bold text-slate-500 mt-1">Integración de ventas y operaciones.</p>
             </div>
             
             <div class="flex items-center gap-4 flex-wrap">
-                <div class="flex bg-slate-50 rounded-lg p-1.5 border border-slate-200 shadow-inner">
+                <div class="flex bg-slate-50 rounded-lg p-1.5 border border-slate-200 shadow-sm">
                     <select class="bg-transparent text-xs font-bold text-slate-700 outline-none pr-3 border-r border-slate-300 cursor-pointer">
                         <option>Septiembre 2026</option>
                         <option>Agosto 2026</option>
@@ -197,21 +206,21 @@
                     </select>
                 </div>
                 
-                <button onclick="alert('Exportando reporte a PDF...')" class="bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 px-4 py-2 rounded-lg text-xs font-bold shadow-sm flex items-center gap-2 transition">
-                    <i class="fas fa-file-export text-slate-400"></i> Exportar
+                <button onclick="alert('Exportando reporte a PDF...')" class="bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 px-4 py-2.5 rounded-lg text-xs font-bold shadow-sm flex items-center gap-2 transition">
+                    <i class="fas fa-file-export text-slate-500"></i> Exportar
                 </button>
 
                 <div class="relative cursor-pointer group" onclick="toggleAlerts()">
                     <div class="w-10 h-10 rounded-full bg-white border border-slate-200 shadow-sm flex items-center justify-center text-slate-600 hover:bg-slate-50 transition">
                         <i class="fas fa-bell"></i>
                     </div>
-                    <span class="absolute top-0 right-0 w-3 h-3 bg-red-500 border-2 border-white rounded-full animate-pulse-fast"></span>
+                    <span class="absolute top-0 right-0 w-3 h-3 bg-exitoRed border-2 border-white rounded-full animate-pulse-fast"></span>
                     <div id="alerts-dropdown" class="hidden absolute right-0 mt-3 w-80 bg-white rounded-xl shadow-xl border border-slate-200 z-50 overflow-hidden">
-                        <div class="bg-red-500 text-white p-4 font-bold text-sm flex justify-between items-center">
+                        <div class="bg-exitoRed text-white p-4 font-bold text-sm flex justify-between items-center">
                             <span>Alertas Críticas (2)</span> <i class="fas fa-exclamation-triangle"></i>
                         </div>
                         <div class="p-4 border-b border-slate-100 hover:bg-slate-50 transition-colors">
-                            <p class="text-sm font-bold text-red-600 mb-1">Quiebre de Stock Inminente</p>
+                            <p class="text-sm font-bold text-exitoRed mb-1">Quiebre de Stock Inminente</p>
                             <p class="text-xs text-slate-600 font-medium">Arroz Diana Premium se agotará en Villavicencio en 48 hrs.</p>
                         </div>
                         <div class="p-4 hover:bg-slate-50 transition-colors">
@@ -221,72 +230,72 @@
                     </div>
                 </div>
 
-                <button onclick="toggleAIChat()" class="bg-exitoBlue text-exitoYellow hover:bg-exitoDarkBlue px-5 py-2 rounded-lg shadow-md flex items-center gap-2 font-bold transition transform hover:scale-105">
-                    <i class="fas fa-robot text-lg"></i> Chat IA
+                <button onclick="toggleAIChat()" class="btn-secondary px-5 py-2.5 flex items-center gap-2 shadow-md">
+                    <i class="fas fa-robot text-exitoYellow text-lg"></i> Chat IA
                 </button>
             </div>
         </header>
 
         <!-- CHAT IA MODAL -->
         <div id="ai-chat-modal" class="hidden fixed right-8 top-28 w-[400px] bg-white rounded-2xl shadow-2xl border border-slate-200 z-[60] flex flex-col h-[550px] animate-fade-in overflow-hidden">
-            <div class="bg-exitoBlue text-white p-5 flex justify-between items-center">
+            <div class="bg-exitoBlack text-white p-5 flex justify-between items-center border-b-4 border-exitoYellow">
                 <h3 class="font-black text-lg"><i class="fas fa-robot text-exitoYellow mr-2"></i> Asistente IA Éxito</h3>
                 <button onclick="toggleAIChat()" class="text-white hover:text-exitoYellow transition-colors"><i class="fas fa-times text-xl"></i></button>
             </div>
-            <div id="chat-content" class="flex-1 p-5 overflow-y-auto bg-slate-50 text-sm space-y-4">
+            <div id="chat-content" class="flex-1 p-5 overflow-y-auto bg-corpGray text-sm space-y-4">
                 <div class="flex gap-3">
-                    <div class="w-10 h-10 rounded-full bg-exitoYellow text-exitoBlue flex items-center justify-center flex-shrink-0 shadow-sm"><i class="fas fa-robot text-lg"></i></div>
+                    <div class="w-10 h-10 rounded-full bg-exitoYellow text-exitoBlack flex items-center justify-center flex-shrink-0 shadow-sm"><i class="fas fa-robot text-lg"></i></div>
                     <div class="bg-white p-4 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm font-medium text-slate-700">¡Hola! Soy tu asistente de Business Intelligence. ¿Qué métrica o estrategia quieres analizar hoy?</div>
                 </div>
             </div>
             <div class="p-4 bg-white border-t border-slate-200 flex gap-3">
-                <input type="text" id="chat-input" placeholder="Escribe tu consulta aquí..." class="flex-1 border border-slate-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-exitoBlue focus:ring-2 focus:ring-blue-100 transition-all">
-                <button onclick="sendChatMessage()" class="bg-exitoBlue text-exitoYellow w-12 h-12 rounded-xl shadow-md hover:bg-exitoDarkBlue transition-colors flex items-center justify-center"><i class="fas fa-paper-plane"></i></button>
+                <input type="text" id="chat-input" placeholder="Escribe tu consulta aquí..." class="flex-1 border border-slate-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-exitoBlack focus:ring-1 focus:ring-exitoBlack transition-all">
+                <button onclick="sendChatMessage()" class="btn-secondary w-12 h-12 shadow-md flex items-center justify-center"><i class="fas fa-paper-plane text-exitoYellow"></i></button>
             </div>
         </div>
 
         <div class="p-8">
             
             <!-- OVERLAY CARGA SIMULACIÓN BACKEND -->
-            <div id="api-loading-overlay" class="hidden absolute inset-0 bg-corpGray bg-opacity-90 z-50 flex flex-col items-center justify-center backdrop-blur-sm">
-                <i class="fas fa-circle-notch fa-spin text-6xl text-exitoBlue mb-6"></i>
-                <p class="font-black text-xl text-slate-800 tracking-tight">Sincronizando Data Warehouse...</p>
-                <p class="text-sm font-medium text-slate-500 mt-2">Salesforce • HubSpot • Zoho CRM</p>
+            <div id="api-loading-overlay" class="hidden absolute inset-0 bg-white bg-opacity-90 z-50 flex flex-col items-center justify-center backdrop-blur-sm">
+                <i class="fas fa-circle-notch fa-spin text-6xl text-exitoYellow mb-6"></i>
+                <p class="font-black text-2xl text-exitoBlack tracking-tight">Sincronizando Data Warehouse...</p>
+                <p class="text-sm font-bold text-slate-500 mt-2 uppercase tracking-widest">Salesforce • HubSpot • Zoho CRM</p>
             </div>
 
             <!-- ================= TAB 1: RENDIMIENTO ================= -->
             <div id="tab-rendimiento" class="animate-fade-in block space-y-8">
                 <!-- KPIs -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="glass-card p-6 border-l-4 border-exitoBlue relative group">
+                    <div class="glass-card p-6 border-t-4 border-exitoBlack relative group">
                         <p class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-2">Ventas Brutas Mes</p>
-                        <p class="text-4xl font-black text-exitoBlue tracking-tighter">$4.2B <span class="text-lg font-bold text-slate-400">COP</span></p>
-                        <button onclick="toggleAI('ai-kpi-1')" class="mt-4 text-xs bg-slate-50 text-slate-600 px-3 py-1.5 rounded-lg font-bold hover:bg-slate-100 border border-slate-200 transition-colors flex items-center gap-1"><i class="fas fa-robot text-exitoBlue"></i> Explicación IA</button>
-                        <div id="ai-kpi-1" class="hidden mt-3 p-3 bg-blue-50 rounded-lg text-xs text-exitoBlue border border-blue-100 font-medium">
+                        <p class="text-4xl font-black text-exitoBlack tracking-tighter">$4.2B <span class="text-lg font-bold text-slate-400">COP</span></p>
+                        <button onclick="toggleAI('ai-kpi-1')" class="mt-4 text-xs bg-slate-50 text-slate-700 px-3 py-1.5 rounded-lg font-bold hover:bg-slate-100 border border-slate-200 transition-colors flex items-center gap-1"><i class="fas fa-robot text-exitoYellow"></i> Explicación IA</button>
+                        <div id="ai-kpi-1" class="hidden mt-3 p-3 bg-yellow-50 rounded-lg text-xs text-exitoBlack border border-yellow-200 font-medium">
                             <strong>Análisis:</strong> Crecimiento del 8.4% impulsado por campañas cruzadas en HubSpot.
                         </div>
                     </div>
-                    <div class="glass-card p-6 border-l-4 border-exitoBlue relative group">
+                    <div class="glass-card p-6 border-t-4 border-exitoBlack relative group">
                         <p class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-2">Sensación Promocional</p>
-                        <p class="text-4xl font-black text-exitoBlue tracking-tighter">62% <span class="text-lg font-bold text-green-500"><i class="fas fa-arrow-up"></i> Alta</span></p>
-                        <button onclick="toggleAI('ai-kpi-2')" class="mt-4 text-xs bg-slate-50 text-slate-600 px-3 py-1.5 rounded-lg font-bold hover:bg-slate-100 border border-slate-200 transition-colors flex items-center gap-1"><i class="fas fa-robot text-exitoBlue"></i> Explicación IA</button>
-                        <div id="ai-kpi-2" class="hidden mt-3 p-3 bg-blue-50 rounded-lg text-xs text-exitoBlue border border-blue-100 font-medium">
+                        <p class="text-4xl font-black text-exitoBlack tracking-tighter">62% <span class="text-lg font-black text-green-500"><i class="fas fa-arrow-up"></i> Alta</span></p>
+                        <button onclick="toggleAI('ai-kpi-2')" class="mt-4 text-xs bg-slate-50 text-slate-700 px-3 py-1.5 rounded-lg font-bold hover:bg-slate-100 border border-slate-200 transition-colors flex items-center gap-1"><i class="fas fa-robot text-exitoYellow"></i> Explicación IA</button>
+                        <div id="ai-kpi-2" class="hidden mt-3 p-3 bg-yellow-50 rounded-lg text-xs text-exitoBlack border border-yellow-200 font-medium">
                             <strong>Análisis:</strong> Los "Días Éxito" generaron alta percepción de valor. Conversión +15%.
                         </div>
                     </div>
-                    <div class="glass-card p-6 border-l-4 border-exitoBlue relative group">
+                    <div class="glass-card p-6 border-t-4 border-exitoBlack relative group">
                         <p class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-2">T. Promedio Atención</p>
-                        <p class="text-4xl font-black text-exitoBlue tracking-tighter">4.2 <span class="text-lg font-bold text-red-500">Hrs</span></p>
-                        <button onclick="toggleAI('ai-kpi-3')" class="mt-4 text-xs bg-slate-50 text-slate-600 px-3 py-1.5 rounded-lg font-bold hover:bg-slate-100 border border-slate-200 transition-colors flex items-center gap-1"><i class="fas fa-robot text-exitoBlue"></i> Explicación IA</button>
-                        <div id="ai-kpi-3" class="hidden mt-3 p-3 bg-blue-50 rounded-lg text-xs text-exitoBlue border border-blue-100 font-medium">
+                        <p class="text-4xl font-black text-exitoBlack tracking-tighter">4.2 <span class="text-lg font-black text-exitoRed">Hrs</span></p>
+                        <button onclick="toggleAI('ai-kpi-3')" class="mt-4 text-xs bg-slate-50 text-slate-700 px-3 py-1.5 rounded-lg font-bold hover:bg-slate-100 border border-slate-200 transition-colors flex items-center gap-1"><i class="fas fa-robot text-exitoYellow"></i> Explicación IA</button>
+                        <div id="ai-kpi-3" class="hidden mt-3 p-3 bg-yellow-50 rounded-lg text-xs text-exitoBlack border border-yellow-200 font-medium">
                             <strong>Análisis:</strong> Retrasos críticos en despacho de última milla.
                         </div>
                     </div>
-                    <div class="glass-card p-6 border-l-4 border-exitoBlue relative group">
+                    <div class="glass-card p-6 border-t-4 border-exitoBlack relative group">
                         <p class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-2">Ticket Promedio</p>
-                        <p class="text-4xl font-black text-exitoBlue tracking-tighter">$184K <span class="text-lg font-bold text-slate-400">COP</span></p>
-                        <button onclick="toggleAI('ai-kpi-4')" class="mt-4 text-xs bg-slate-50 text-slate-600 px-3 py-1.5 rounded-lg font-bold hover:bg-slate-100 border border-slate-200 transition-colors flex items-center gap-1"><i class="fas fa-robot text-exitoBlue"></i> Explicación IA</button>
-                        <div id="ai-kpi-4" class="hidden mt-3 p-3 bg-blue-50 rounded-lg text-xs text-exitoBlue border border-blue-100 font-medium">
+                        <p class="text-4xl font-black text-exitoBlack tracking-tighter">$184K <span class="text-lg font-bold text-slate-400">COP</span></p>
+                        <button onclick="toggleAI('ai-kpi-4')" class="mt-4 text-xs bg-slate-50 text-slate-700 px-3 py-1.5 rounded-lg font-bold hover:bg-slate-100 border border-slate-200 transition-colors flex items-center gap-1"><i class="fas fa-robot text-exitoYellow"></i> Explicación IA</button>
+                        <div id="ai-kpi-4" class="hidden mt-3 p-3 bg-yellow-50 rounded-lg text-xs text-exitoBlack border border-yellow-200 font-medium">
                             <strong>Análisis:</strong> Incremento por algoritmos de venta cruzada en checkout.
                         </div>
                     </div>
@@ -294,13 +303,13 @@
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div class="glass-card p-6 lg:col-span-1 flex flex-col">
-                        <h3 class="text-sm font-black text-exitoBlue mb-4 uppercase tracking-wider">Impacto Promocional</h3>
+                        <h3 class="text-sm font-black text-exitoBlack mb-4 uppercase tracking-wider">Impacto Promocional</h3>
                         <div class="relative flex-1 min-h-[250px] w-full"><canvas id="promoChart"></canvas></div>
                     </div>
                     <div class="glass-card p-6 lg:col-span-2 flex flex-col">
                         <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-sm font-black text-exitoBlue uppercase tracking-wider">Comportamiento Real vs Pronóstico IA</h3>
-                            <span class="bg-purple-100 text-purple-700 border border-purple-200 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider">Forecasting IA</span>
+                            <h3 class="text-sm font-black text-exitoBlack uppercase tracking-wider">Real vs Pronóstico IA</h3>
+                            <span class="bg-slate-100 text-slate-600 border border-slate-200 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider"><i class="fas fa-chart-line text-exitoYellow mr-1"></i> Forecasting IA</span>
                         </div>
                         <div class="relative flex-1 min-h-[250px] w-full"><canvas id="monthlyChart"></canvas></div>
                     </div>
@@ -309,25 +318,25 @@
                 <!-- Inventario TOP 10 y BOTTOM 10 -->
                 <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
                     <div class="glass-card overflow-hidden flex flex-col h-[600px]">
-                        <div class="bg-white border-b border-slate-200 p-5 flex justify-between items-center">
-                            <h3 class="text-sm font-black text-exitoBlue uppercase tracking-wider"><i class="fas fa-arrow-up text-green-500 mr-2 text-lg"></i> Top 10 - Alta Demanda</h3>
-                            <span class="text-xs font-bold text-slate-400 bg-slate-100 px-2 py-1 rounded">Rotación Saludable</span>
+                        <div class="bg-white border-b border-slate-200 p-6 flex justify-between items-center">
+                            <h3 class="text-sm font-black text-exitoBlack uppercase tracking-wider"><i class="fas fa-arrow-up text-green-500 mr-2 text-lg"></i> Top 10 - Alta Demanda</h3>
+                            <span class="text-xs font-bold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200">Rotación Saludable</span>
                         </div>
-                        <div class="flex-1 overflow-y-auto p-5 bg-slate-50/50 space-y-3 hide-scrollbar" id="top-10-list"></div>
+                        <div class="flex-1 overflow-y-auto p-6 bg-slate-50/50 space-y-4 hide-scrollbar" id="top-10-list"></div>
                     </div>
                     <div class="glass-card overflow-hidden flex flex-col h-[600px]">
-                        <div class="bg-exitoDarkBlue p-5 flex justify-between items-center">
-                            <h3 class="text-sm font-black text-exitoYellow uppercase tracking-wider"><i class="fas fa-exclamation-triangle text-exitoYellow mr-2 text-lg"></i> Bottom 10 - Estancados</h3>
-                            <button onclick="toggleAI('ai-bottom-10')" class="bg-exitoYellow text-exitoBlue px-4 py-2 rounded-lg text-xs font-black shadow-md hover:bg-yellow-400 transition-transform transform hover:scale-105"><i class="fas fa-robot mr-1"></i> Estrategias IA</button>
+                        <div class="bg-exitoBlack p-6 flex justify-between items-center border-b-4 border-exitoYellow">
+                            <h3 class="text-sm font-black text-white uppercase tracking-wider"><i class="fas fa-exclamation-triangle text-exitoYellow mr-2 text-lg"></i> Bottom 10 - Estancados</h3>
+                            <button onclick="toggleAI('ai-bottom-10')" class="btn-primary px-4 py-2 text-xs shadow-md"><i class="fas fa-robot mr-1"></i> Estrategias IA</button>
                         </div>
-                        <div id="ai-bottom-10" class="hidden bg-yellow-50 p-5 border-b border-yellow-200 text-sm text-slate-800">
-                            <strong class="text-exitoBlue block mb-3 text-base"><i class="fas fa-lightbulb text-exitoYellow mr-2"></i> Plan de Acción Inteligente:</strong>
+                        <div id="ai-bottom-10" class="hidden bg-yellow-50 p-6 border-b border-yellow-200 text-sm text-slate-800 shadow-inner">
+                            <strong class="text-exitoBlack block mb-3 text-base font-black"><i class="fas fa-lightbulb text-exitoYellow mr-2"></i> Plan de Acción Inteligente:</strong>
                             <ul class="list-disc pl-5 space-y-2 font-medium">
                                 <li><strong>Combos (Bundling):</strong> Unir 'Copas de Vidrio' con licores premium para forzar salida.</li>
                                 <li><strong>Descuento Escalonado:</strong> Aplicar 30% off en cosmética pagando exclusivamente con Tarjeta Éxito.</li>
                             </ul>
                         </div>
-                        <div class="flex-1 overflow-y-auto p-5 bg-red-50/30 space-y-3 hide-scrollbar" id="bottom-10-list"></div>
+                        <div class="flex-1 overflow-y-auto p-6 bg-slate-50 space-y-4 hide-scrollbar" id="bottom-10-list"></div>
                     </div>
                 </div>
             </div>
@@ -335,41 +344,41 @@
             <!-- ================= TAB 2: CRM ANALÍTICO (CON RFM Y CHURN) ================= -->
             <div id="tab-crm" class="hidden space-y-8">
                 
-                <div class="bg-red-50 border border-red-200 p-6 rounded-2xl shadow-sm flex items-start gap-5 animate-pulse-fast">
-                    <div class="bg-white p-3 rounded-full shadow-sm"><i class="fas fa-exclamation-triangle text-red-500 text-3xl"></i></div>
+                <div class="bg-white border-l-8 border-exitoRed p-6 rounded-xl shadow-md flex items-start gap-5 animate-pulse-fast">
+                    <div class="bg-red-50 p-3 rounded-full"><i class="fas fa-exclamation-triangle text-exitoRed text-3xl"></i></div>
                     <div>
-                        <h4 class="text-lg font-black text-red-700 tracking-tight">Predicción de Fugas (Churn) Detectada por IA</h4>
-                        <p class="text-sm text-slate-700 mt-2 font-medium leading-relaxed"><strong>Alerta Villavicencio:</strong> Los clientes B2B (Asaderos/Restaurantes) están disminuyendo su volumen de compra de cárnicos en un <strong>15%</strong> en las últimas 3 semanas. Posible entrada de competidor mayorista. 
-                        <button class="ml-2 bg-red-600 text-white px-3 py-1 rounded shadow hover:bg-red-700 transition font-bold text-xs">Lanzar Campaña Retención</button></p>
+                        <h4 class="text-lg font-black text-exitoBlack tracking-tight uppercase">Predicción de Fugas (Churn) Detectada por IA</h4>
+                        <p class="text-sm text-slate-600 mt-2 font-medium leading-relaxed"><strong>Alerta Villavicencio:</strong> Los clientes B2B (Asaderos/Restaurantes) están disminuyendo su volumen de compra de cárnicos en un <strong>15%</strong> en las últimas 3 semanas. Posible entrada de competidor mayorista. 
+                        <button class="ml-3 btn-secondary px-4 py-1.5 text-xs">Lanzar Campaña Retención</button></p>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
                     <div class="glass-card p-6 xl:col-span-2 flex flex-col">
-                        <h3 class="text-sm font-black text-exitoBlue mb-6 uppercase tracking-wider">Matriz RFM (Recencia, Frecuencia, Valor)</h3>
+                        <h3 class="text-sm font-black text-exitoBlack mb-6 uppercase tracking-wider">Matriz RFM (Recencia, Frecuencia, Valor)</h3>
                         <div class="grid grid-cols-3 gap-6 flex-1">
-                            <div class="bg-gradient-to-b from-green-50 to-white border border-green-100 rounded-xl p-5 flex flex-col justify-center items-center text-center shadow-sm">
-                                <i class="fas fa-trophy text-4xl text-green-500 mb-3"></i>
-                                <h4 class="font-black text-slate-800 text-lg">Campeones</h4>
+                            <div class="bg-white border border-slate-200 rounded-xl p-6 flex flex-col justify-center items-center text-center shadow-sm hover:border-exitoYellow transition-colors">
+                                <i class="fas fa-trophy text-4xl text-green-500 mb-4"></i>
+                                <h4 class="font-black text-exitoBlack text-lg">Campeones</h4>
                                 <p class="text-xs text-slate-500 mt-1 font-medium">Compran mucho y seguido.</p>
-                                <span class="bg-green-100 text-green-700 border border-green-200 font-black text-xs px-3 py-1.5 rounded-full mt-4 w-full">15% de Base</span>
+                                <span class="bg-green-50 text-green-700 border border-green-200 font-black text-xs px-3 py-1.5 rounded-full mt-4 w-full">15% de Base</span>
                             </div>
-                            <div class="bg-gradient-to-b from-blue-50 to-white border border-blue-100 rounded-xl p-5 flex flex-col justify-center items-center text-center shadow-sm">
-                                <i class="fas fa-users text-4xl text-blue-500 mb-3"></i>
-                                <h4 class="font-black text-slate-800 text-lg">Promedio</h4>
+                            <div class="bg-white border border-slate-200 rounded-xl p-6 flex flex-col justify-center items-center text-center shadow-sm hover:border-exitoYellow transition-colors">
+                                <i class="fas fa-users text-4xl text-blue-500 mb-4"></i>
+                                <h4 class="font-black text-exitoBlack text-lg">Promedio</h4>
                                 <p class="text-xs text-slate-500 mt-1 font-medium">Compras estables mensuales.</p>
-                                <span class="bg-blue-100 text-blue-700 border border-blue-200 font-black text-xs px-3 py-1.5 rounded-full mt-4 w-full">60% de Base</span>
+                                <span class="bg-blue-50 text-blue-700 border border-blue-200 font-black text-xs px-3 py-1.5 rounded-full mt-4 w-full">60% de Base</span>
                             </div>
-                            <div class="bg-gradient-to-b from-red-50 to-white border border-red-100 rounded-xl p-5 flex flex-col justify-center items-center text-center shadow-sm">
-                                <i class="fas fa-heart-broken text-4xl text-red-500 mb-3"></i>
-                                <h4 class="font-black text-slate-800 text-lg">En Riesgo</h4>
+                            <div class="bg-white border border-slate-200 rounded-xl p-6 flex flex-col justify-center items-center text-center shadow-sm hover:border-exitoYellow transition-colors">
+                                <i class="fas fa-heart-broken text-4xl text-exitoRed mb-4"></i>
+                                <h4 class="font-black text-exitoBlack text-lg">En Riesgo</h4>
                                 <p class="text-xs text-slate-500 mt-1 font-medium">Hace meses no vuelven.</p>
-                                <span class="bg-red-100 text-red-700 border border-red-200 font-black text-xs px-3 py-1.5 rounded-full mt-4 w-full">25% de Base</span>
+                                <span class="bg-red-50 text-red-700 border border-red-200 font-black text-xs px-3 py-1.5 rounded-full mt-4 w-full">25% de Base</span>
                             </div>
                         </div>
                     </div>
                     <div class="glass-card p-6 flex flex-col">
-                        <h3 class="text-sm font-black text-exitoBlue mb-4 uppercase tracking-wider">Adopción Puntos Col.</h3>
+                        <h3 class="text-sm font-black text-exitoBlack mb-4 uppercase tracking-wider">Adopción Puntos Col.</h3>
                         <div class="relative flex-1 min-h-[200px] w-full"><canvas id="puntosChart"></canvas></div>
                     </div>
                 </div>
@@ -377,7 +386,7 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <!-- Tabla CRM -->
                     <div class="glass-card flex flex-col h-[700px] overflow-hidden">
-                        <div class="bg-exitoBlue text-white p-5 border-b border-exitoDarkBlue">
+                        <div class="bg-exitoBlack text-white p-6 border-b-4 border-exitoYellow">
                             <h3 class="text-sm font-black uppercase tracking-wider"><i class="fas fa-users mr-2 text-exitoYellow"></i> Top 25 Clientes (Haz clic para Ver Perfil)</h3>
                         </div>
                         <div class="flex-1 overflow-y-auto p-0 hide-scrollbar bg-white">
@@ -392,11 +401,11 @@
                     
                     <!-- Minería Patrones -->
                     <div class="glass-card flex flex-col h-[700px] overflow-hidden">
-                        <div class="bg-exitoBlue text-white p-5 border-b border-exitoDarkBlue flex justify-between items-center">
+                        <div class="bg-exitoBlack text-white p-6 border-b-4 border-exitoYellow flex justify-between items-center">
                             <h3 class="text-sm font-black uppercase tracking-wider"><i class="fas fa-project-diagram text-exitoYellow mr-2"></i> Minería: Patrones Cruzados</h3>
-                            <span class="bg-blue-800 text-blue-200 px-2 py-1 rounded text-[10px] font-bold">Data Mining Activa</span>
+                            <span class="bg-white text-exitoBlack px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest shadow-sm">Data Mining Activa</span>
                         </div>
-                        <div class="flex-1 overflow-y-auto p-6 bg-slate-50/50 space-y-4 hide-scrollbar" id="patterns-container"></div>
+                        <div class="flex-1 overflow-y-auto p-6 bg-slate-50 space-y-5 hide-scrollbar" id="patterns-container"></div>
                     </div>
                 </div>
             </div>
@@ -405,92 +414,92 @@
             <div id="tab-cx" class="hidden space-y-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <div class="glass-card p-6 flex flex-col">
-                        <h3 class="text-sm font-black uppercase text-exitoBlue mb-6 tracking-wider">Estado de Órdenes</h3>
+                        <h3 class="text-sm font-black uppercase text-exitoBlack mb-6 tracking-wider">Estado de Órdenes</h3>
                         <div class="relative flex-1 min-h-[250px] w-full"><canvas id="ordersChart"></canvas></div>
                     </div>
                     <div class="glass-card p-6 flex flex-col">
-                        <h3 class="text-sm font-black uppercase text-exitoBlue mb-6 tracking-wider">Favoritos Geolocalizados</h3>
+                        <h3 class="text-sm font-black uppercase text-exitoBlack mb-6 tracking-wider">Favoritos Geolocalizados</h3>
                         <div class="space-y-4 flex-1 flex flex-col justify-center">
-                            <div class="flex justify-between items-center p-4 bg-white rounded-xl border border-slate-200 shadow-sm hover:border-exitoYellow transition-colors"><div><p class="font-bold text-slate-800 text-base">Panadería Fresca</p><p class="text-xs text-slate-500 font-medium">Top Desayuno</p></div><span class="bg-exitoBlue text-white text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-wider">Bogotá D.C.</span></div>
-                            <div class="flex justify-between items-center p-4 bg-white rounded-xl border border-slate-200 shadow-sm hover:border-exitoYellow transition-colors"><div><p class="font-bold text-slate-800 text-base">Arepas de Queso</p><p class="text-xs text-slate-500 font-medium">Tradición</p></div><span class="bg-exitoBlue text-white text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-wider">Antioquia</span></div>
-                            <div class="flex justify-between items-center p-4 bg-white rounded-xl border border-slate-200 shadow-sm hover:border-exitoYellow transition-colors"><div><p class="font-bold text-slate-800 text-base">Cerveza Sixpack</p><p class="text-xs text-slate-500 font-medium">Fines Semana</p></div><span class="bg-exitoBlue text-white text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-wider">Valle</span></div>
-                            <div class="flex justify-between items-center p-4 bg-white rounded-xl border border-slate-200 shadow-sm hover:border-exitoYellow transition-colors"><div><p class="font-bold text-slate-800 text-base">Carnes Rojas</p><p class="text-xs text-slate-500 font-medium">Volumen Kg</p></div><span class="bg-exitoBlue text-white text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-wider">Llanos</span></div>
+                            <div class="flex justify-between items-center p-4 bg-white rounded-xl border border-slate-200 shadow-sm hover:border-exitoYellow transition-colors"><div><p class="font-bold text-slate-800 text-base">Panadería Fresca</p><p class="text-xs text-slate-500 font-medium">Top Desayuno</p></div><span class="bg-exitoBlack text-white text-[10px] font-black px-3 py-1.5 rounded-lg uppercase tracking-wider">Bogotá D.C.</span></div>
+                            <div class="flex justify-between items-center p-4 bg-white rounded-xl border border-slate-200 shadow-sm hover:border-exitoYellow transition-colors"><div><p class="font-bold text-slate-800 text-base">Arepas de Queso</p><p class="text-xs text-slate-500 font-medium">Tradición</p></div><span class="bg-exitoBlack text-white text-[10px] font-black px-3 py-1.5 rounded-lg uppercase tracking-wider">Antioquia</span></div>
+                            <div class="flex justify-between items-center p-4 bg-white rounded-xl border border-slate-200 shadow-sm hover:border-exitoYellow transition-colors"><div><p class="font-bold text-slate-800 text-base">Cerveza Sixpack</p><p class="text-xs text-slate-500 font-medium">Fines Semana</p></div><span class="bg-exitoBlack text-white text-[10px] font-black px-3 py-1.5 rounded-lg uppercase tracking-wider">Valle</span></div>
+                            <div class="flex justify-between items-center p-4 bg-white rounded-xl border border-slate-200 shadow-sm hover:border-exitoYellow transition-colors"><div><p class="font-bold text-slate-800 text-base">Carnes Rojas</p><p class="text-xs text-slate-500 font-medium">Volumen Kg</p></div><span class="bg-exitoBlack text-white text-[10px] font-black px-3 py-1.5 rounded-lg uppercase tracking-wider">Llanos</span></div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Inbox PQRS -->
                 <div class="glass-card h-[700px] flex flex-col overflow-hidden">
-                    <div class="bg-exitoBlue p-5 flex justify-between items-center border-b border-exitoDarkBlue">
+                    <div class="bg-exitoBlack p-6 flex justify-between items-center border-b-4 border-exitoYellow">
                         <h3 class="text-sm font-black text-white uppercase tracking-wider"><i class="fas fa-inbox text-exitoYellow mr-2 text-lg"></i> Inbox PQRS (Zoho Integrado)</h3>
-                        <button onclick="document.getElementById('pqrs-ai-summary').classList.remove('hidden')" class="bg-exitoYellow text-exitoBlue px-5 py-2.5 rounded-lg text-xs font-black shadow-md hover:bg-yellow-400 transition transform hover:scale-105">
-                            <i class="fas fa-brain mr-1"></i> Análisis IA General
+                        <button onclick="document.getElementById('pqrs-ai-summary').classList.remove('hidden')" class="btn-primary px-5 py-2.5 flex items-center gap-2 shadow-md">
+                            <i class="fas fa-brain text-lg"></i> Análisis IA General
                         </button>
                     </div>
                     
-                    <div id="pqrs-ai-summary" class="hidden bg-blue-50 p-6 border-b border-blue-200">
-                        <h4 class="font-black text-base mb-3 text-exitoBlue"><i class="fas fa-robot text-exitoYellow text-xl mr-2"></i> Resumen Estratégico IA (Procesando 20 Tickets):</h4>
+                    <div id="pqrs-ai-summary" class="hidden bg-yellow-50 p-6 border-b border-yellow-200 shadow-inner">
+                        <h4 class="font-black text-base mb-3 text-exitoBlack"><i class="fas fa-robot text-exitoYellow text-xl mr-2 bg-exitoBlack p-1 rounded-full"></i> Resumen Estratégico IA (Procesando 20 Tickets):</h4>
                         <ul class="text-sm text-slate-700 space-y-2 list-disc pl-6 font-medium">
-                            <li><strong class="text-red-600">Alerta Logística:</strong> 40% de quejas asociadas a domicilios nocturnos retrasados y filas largas en tienda física.</li>
-                            <li><strong class="text-orange-500">Alerta Tecnológica:</strong> Problemas aislados pero recurrentes en app móvil al redimir Puntos Colombia.</li>
+                            <li><strong class="text-exitoRed">Alerta Logística:</strong> 40% de quejas asociadas a domicilios nocturnos retrasados y filas largas en tienda física.</li>
+                            <li><strong class="text-orange-600">Alerta Tecnológica:</strong> Problemas aislados pero recurrentes en app móvil al redimir Puntos Colombia.</li>
                             <li><strong class="text-green-600">Fortalezas Destacadas:</strong> La higiene de las tiendas y la asesoría consultiva en tecnología generan un alto volumen de felicitaciones.</li>
                         </ul>
                     </div>
 
-                    <div class="flex-1 overflow-y-auto p-6 bg-slate-50/30 space-y-3 hide-scrollbar" id="pqrs-container"></div>
+                    <div class="flex-1 overflow-y-auto p-6 bg-slate-50 space-y-4 hide-scrollbar" id="pqrs-container"></div>
                 </div>
             </div>
 
             <!-- ================= TAB 4: CATEGORÍAS ================= -->
             <div id="tab-categorias" class="hidden space-y-8">
                 <!-- Dashboard de Sectores -->
-                <div class="glass-card p-6 flex flex-col">
+                <div class="glass-card p-8 flex flex-col">
                     <div class="flex justify-between items-center mb-6">
-                        <h3 class="text-sm font-black uppercase text-exitoBlue tracking-wider">Rendimiento Estadístico por Sector</h3>
-                        <button onclick="analyzeCategoriesAI()" class="bg-exitoYellow text-exitoBlue px-4 py-2 rounded-lg text-xs font-black shadow-sm hover:bg-yellow-400 transition">
-                            <i class="fas fa-brain mr-1"></i> Resumen IA
+                        <h3 class="text-sm font-black uppercase text-exitoBlack tracking-wider">Rendimiento Estadístico por Sector</h3>
+                        <button onclick="analyzeCategoriesAI()" class="btn-primary px-5 py-2.5 shadow-md flex items-center gap-2">
+                            <i class="fas fa-brain text-lg"></i> Resumen IA
                         </button>
                     </div>
-                    <div class="relative h-72 w-full"><canvas id="categoriesChart"></canvas></div>
+                    <div class="relative h-80 w-full"><canvas id="categoriesChart"></canvas></div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="categories-container"></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="categories-container"></div>
             </div>
 
             <!-- ================= TAB 5: LOGÍSTICA Y RUTAS ================= -->
             <div id="tab-logistica" class="hidden space-y-8">
                 <header class="mb-6 flex flex-wrap justify-between items-end gap-4">
                     <div>
-                        <h3 class="text-3xl font-black text-exitoBlue tracking-tight">Logística y Última Milla</h3>
+                        <h3 class="text-3xl font-black text-exitoBlack tracking-tight">Logística y Última Milla</h3>
                         <p class="text-sm font-bold text-slate-500 mt-1">Gestión de flota, tiempos de entrega y optimización de rutas.</p>
                     </div>
-                    <button onclick="optimizeRoutesIA()" class="bg-exitoBlue text-exitoYellow px-6 py-3 rounded-xl font-black shadow-lg flex items-center gap-2 hover:bg-exitoDarkBlue transition transform hover:scale-105 text-sm uppercase tracking-wide">
-                        <i class="fas fa-route text-lg"></i> Auto-Optimizar Rutas (IA)
+                    <button onclick="optimizeRoutesIA()" class="btn-secondary px-6 py-3 shadow-lg flex items-center gap-2 text-sm uppercase tracking-wide">
+                        <i class="fas fa-route text-exitoYellow text-lg"></i> Auto-Optimizar Rutas (IA)
                     </button>
                 </header>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="glass-card p-6 border-l-4 border-green-500"><p class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-2">Flota Operativa</p><p class="text-4xl font-black text-exitoBlue">92% <span class="text-sm font-bold text-slate-400">145 Veh.</span></p></div>
-                    <div class="glass-card p-6 border-l-4 border-orange-500"><p class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-2">Tiempo Prom. Entrega</p><p class="text-4xl font-black text-exitoBlue">58 <span class="text-sm font-bold text-slate-400">Mins</span></p></div>
-                    <div class="glass-card p-6 border-l-4 border-exitoYellow"><p class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-2">Entregas Perfectas</p><p class="text-4xl font-black text-exitoBlue">88% <span class="text-sm font-bold text-red-500"><i class="fas fa-arrow-down"></i> -2%</span></p></div>
-                    <div class="glass-card p-6 border-l-4 border-blue-500"><p class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-2">Costo Promedio Envío</p><p class="text-4xl font-black text-exitoBlue">$8.5K <span class="text-sm font-bold text-slate-400">COP</span></p></div>
+                    <div class="glass-card p-6 border-t-4 border-exitoBlack"><p class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-2">Flota Operativa</p><p class="text-4xl font-black text-exitoBlack">92% <span class="text-sm font-bold text-slate-400">145 Veh.</span></p></div>
+                    <div class="glass-card p-6 border-t-4 border-exitoBlack"><p class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-2">Tiempo Prom. Entrega</p><p class="text-4xl font-black text-exitoBlack">58 <span class="text-sm font-bold text-slate-400">Mins</span></p></div>
+                    <div class="glass-card p-6 border-t-4 border-exitoBlack"><p class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-2">Entregas Perfectas</p><p class="text-4xl font-black text-exitoBlack">88% <span class="text-sm font-bold text-exitoRed"><i class="fas fa-arrow-down"></i> -2%</span></p></div>
+                    <div class="glass-card p-6 border-t-4 border-exitoBlack"><p class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-2">Costo Promedio Envío</p><p class="text-4xl font-black text-exitoBlack">$8.5K <span class="text-sm font-bold text-slate-400">COP</span></p></div>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div class="glass-card p-6 flex flex-col">
-                        <h3 class="text-sm font-black uppercase text-exitoBlue mb-6 tracking-wider">Desempeño de Entregas por Hora</h3>
+                    <div class="glass-card p-8 flex flex-col">
+                        <h3 class="text-sm font-black uppercase text-exitoBlack mb-6 tracking-wider">Desempeño de Entregas por Hora</h3>
                         <div class="relative flex-1 min-h-[300px] w-full"><canvas id="logisticsChart"></canvas></div>
                     </div>
-                    <div class="glass-card bg-gradient-to-br from-exitoBlue to-exitoDarkBlue p-8 flex flex-col border-0">
+                    <div class="glass-card bg-exitoBlack p-8 flex flex-col border-0">
                         <h3 class="text-xl font-black uppercase text-exitoYellow mb-6 tracking-wider"><i class="fas fa-satellite-dish mr-2"></i> Monitoreo de Rutas (IA Activa)</h3>
                         <div class="space-y-4 flex-1 flex flex-col justify-center">
-                            <div class="bg-white/10 backdrop-blur-md p-5 rounded-xl border border-white/20">
-                                <p class="text-white font-bold text-base mb-2"><i class="fas fa-truck text-red-400 mr-2 text-lg"></i> Alerta Tráfico (Bogotá - Autonorte)</p>
-                                <p class="text-sm text-blue-100 font-medium">IA recalculando 12 rutas en tiempo real. Retraso estimado mitigado de 45 min a 15 min usando corredores alternos.</p>
+                            <div class="bg-white/5 backdrop-blur-md p-6 rounded-xl border border-white/10">
+                                <p class="text-white font-bold text-base mb-2"><i class="fas fa-truck text-exitoRed mr-2 text-lg"></i> Alerta Tráfico (Bogotá - Autonorte)</p>
+                                <p class="text-sm text-slate-300 font-medium">IA recalculando 12 rutas en tiempo real. Retraso estimado mitigado de 45 min a 15 min usando corredores alternos.</p>
                             </div>
-                            <div class="bg-white/10 backdrop-blur-md p-5 rounded-xl border border-white/20">
+                            <div class="bg-white/5 backdrop-blur-md p-6 rounded-xl border border-white/10">
                                 <p class="text-white font-bold text-base mb-2"><i class="fas fa-check-circle text-green-400 mr-2 text-lg"></i> Optimización Carga (Medellín)</p>
-                                <p class="text-sm text-blue-100 font-medium">El algoritmo de consolidación ahorró 15% en costos operativos agrupando pedidos de Poblado y Envigado en el hub sur.</p>
+                                <p class="text-sm text-slate-300 font-medium">El algoritmo de consolidación ahorró 15% en costos operativos agrupando pedidos de Poblado y Envigado en el hub sur.</p>
                             </div>
                         </div>
                     </div>
@@ -499,29 +508,29 @@
 
             <!-- ================= TAB 6: ZONAS GEO ================= -->
             <div id="tab-geo" class="hidden space-y-8">
-                <div class="glass-card p-6 flex flex-col">
-                    <h3 class="text-sm font-black uppercase text-exitoBlue mb-6 tracking-wider">Ventas por Ciudad Principal (Millones COP)</h3>
+                <div class="glass-card p-8 flex flex-col">
+                    <h3 class="text-sm font-black uppercase text-exitoBlack mb-6 tracking-wider">Ventas por Ciudad Principal (Millones COP)</h3>
                     <div class="relative h-80 w-full"><canvas id="geoChart"></canvas></div>
                 </div>
 
-                <div class="glass-card bg-exitoBlue p-8 border-0">
-                    <h3 class="text-2xl font-black uppercase text-exitoYellow mb-6 tracking-tight"><i class="fas fa-brain mr-2"></i> Estrategias Tácticas IA por Zona Geográfica</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-exitoDarkBlue p-6 rounded-xl border border-blue-900 shadow-inner">
-                            <h4 class="font-black text-white text-lg mb-2"><i class="fas fa-map-pin text-red-400 mr-2"></i> Bogotá D.C.</h4>
-                            <p class="text-sm text-blue-100 leading-relaxed font-medium"><strong>IA Diagnóstico:</strong> Alto abandono de carrito por tiempos de entrega.<br><br><strong>Estrategia:</strong> Implementar modelo de Dark Stores exclusivas en Usaquén y Suba para garantizar última milla < 60 mins.</p>
+                <div class="glass-card bg-exitoBlack p-10 border-0 border-t-8 border-exitoYellow">
+                    <h3 class="text-2xl font-black uppercase text-white mb-8 tracking-tight"><i class="fas fa-brain text-exitoYellow mr-3"></i> Estrategias Tácticas IA por Zona Geográfica</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="bg-white/5 p-8 rounded-2xl border border-white/10">
+                            <h4 class="font-black text-white text-xl mb-3"><i class="fas fa-map-pin text-exitoYellow mr-2"></i> Bogotá D.C.</h4>
+                            <p class="text-sm text-slate-300 leading-relaxed font-medium"><strong>IA Diagnóstico:</strong> Alto abandono de carrito por tiempos de entrega.<br><br><strong class="text-exitoYellow">Estrategia:</strong> Implementar modelo de Dark Stores exclusivas en Usaquén y Suba para garantizar última milla < 60 mins.</p>
                         </div>
-                        <div class="bg-exitoDarkBlue p-6 rounded-xl border border-blue-900 shadow-inner">
-                            <h4 class="font-black text-white text-lg mb-2"><i class="fas fa-map-pin text-green-400 mr-2"></i> Medellín (Antioquia)</h4>
-                            <p class="text-sm text-blue-100 leading-relaxed font-medium"><strong>IA Diagnóstico:</strong> Lealtad física inquebrantable en tiendas ancla.<br><br><strong>Estrategia:</strong> Potenciar eventos "Retailtainment" en Éxito Wow (ej. ferias gastronómicas fin de semana) cruzados con licores locales.</p>
+                        <div class="bg-white/5 p-8 rounded-2xl border border-white/10">
+                            <h4 class="font-black text-white text-xl mb-3"><i class="fas fa-map-pin text-exitoYellow mr-2"></i> Medellín (Antioquia)</h4>
+                            <p class="text-sm text-slate-300 leading-relaxed font-medium"><strong>IA Diagnóstico:</strong> Lealtad física inquebrantable en tiendas ancla.<br><br><strong class="text-exitoYellow">Estrategia:</strong> Potenciar eventos "Retailtainment" en Éxito Wow (ej. ferias gastronómicas fin de semana) cruzados con licores locales.</p>
                         </div>
-                        <div class="bg-exitoDarkBlue p-6 rounded-xl border border-blue-900 shadow-inner">
-                            <h4 class="font-black text-white text-lg mb-2"><i class="fas fa-map-pin text-blue-400 mr-2"></i> Cali (Valle)</h4>
-                            <p class="text-sm text-blue-100 leading-relaxed font-medium"><strong>IA Diagnóstico:</strong> Extrema sensibilidad al precio. Picos limitados a quincenas.<br><br><strong>Estrategia:</strong> Modificar surtido hacia "Tamaños Familiares" (Ahorro) e impulsar Días Éxito con descuentos escalonados.</p>
+                        <div class="bg-white/5 p-8 rounded-2xl border border-white/10">
+                            <h4 class="font-black text-white text-xl mb-3"><i class="fas fa-map-pin text-exitoYellow mr-2"></i> Cali (Valle)</h4>
+                            <p class="text-sm text-slate-300 leading-relaxed font-medium"><strong>IA Diagnóstico:</strong> Extrema sensibilidad al precio. Picos limitados a quincenas.<br><br><strong class="text-exitoYellow">Estrategia:</strong> Modificar surtido hacia "Tamaños Familiares" (Ahorro) e impulsar Días Éxito con descuentos escalonados.</p>
                         </div>
-                        <div class="bg-exitoDarkBlue p-6 rounded-xl border border-blue-900 shadow-inner">
-                            <h4 class="font-black text-white text-lg mb-2"><i class="fas fa-map-pin text-yellow-400 mr-2"></i> Villavicencio (Llanos)</h4>
-                            <p class="text-sm text-blue-100 leading-relaxed font-medium"><strong>IA Diagnóstico:</strong> 40% del volumen empujado por canal HORECA (Asaderos).<br><br><strong>Estrategia:</strong> Crear canal rápido (Cajas B2B) y aplicar precios dinámicos por volumen en carne de res y cerdo.</p>
+                        <div class="bg-white/5 p-8 rounded-2xl border border-white/10">
+                            <h4 class="font-black text-white text-xl mb-3"><i class="fas fa-map-pin text-exitoYellow mr-2"></i> Villavicencio (Llanos)</h4>
+                            <p class="text-sm text-slate-300 leading-relaxed font-medium"><strong>IA Diagnóstico:</strong> 40% del volumen empujado por canal HORECA (Asaderos).<br><br><strong class="text-exitoYellow">Estrategia:</strong> Crear canal rápido (Cajas B2B) y aplicar precios dinámicos por volumen en carne de res y cerdo.</p>
                         </div>
                     </div>
                 </div>
@@ -530,49 +539,49 @@
             <!-- ================= TAB 7: OPORTUNIDADES Y TENDENCIAS ================= -->
             <div id="tab-oportunidades" class="hidden space-y-8">
                 <header class="mb-6">
-                    <h3 class="text-3xl font-black text-exitoBlue tracking-tight">Oportunidades de Venta y Comportamientos</h3>
+                    <h3 class="text-3xl font-black text-exitoBlack tracking-tight">Oportunidades de Venta y Comportamientos</h3>
                     <p class="text-sm font-bold text-slate-500 mt-1">Análisis de mercado, hábitos de gasto y nuevas vías de monetización asistidas por IA.</p>
                 </header>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div class="glass-card p-6 flex flex-col">
-                        <h3 class="text-sm font-black uppercase text-exitoBlue mb-6 tracking-wider">Tendencias de Mercado (Interés de Búsqueda)</h3>
-                        <div class="relative flex-1 min-h-[300px] w-full"><canvas id="trendsChart"></canvas></div>
-                        <p class="text-[10px] text-slate-400 text-center mt-4 font-bold uppercase tracking-widest">Crecimiento porcentual Q3</p>
+                    <div class="glass-card p-8 flex flex-col">
+                        <h3 class="text-sm font-black uppercase text-exitoBlack mb-6 tracking-wider">Tendencias de Mercado (Interés de Búsqueda)</h3>
+                        <div class="relative flex-1 min-h-[350px] w-full"><canvas id="trendsChart"></canvas></div>
+                        <p class="text-[10px] text-slate-400 text-center mt-6 font-bold uppercase tracking-widest">Crecimiento porcentual Q3</p>
                     </div>
-                    <div class="glass-card p-6 flex flex-col">
-                        <h3 class="text-sm font-black uppercase text-exitoBlue mb-6 tracking-wider">Hábitos de Gasto en el Mes</h3>
-                        <div class="relative flex-1 min-h-[300px] w-full"><canvas id="behaviorChart"></canvas></div>
-                        <p class="text-[10px] text-slate-400 text-center mt-4 font-bold uppercase tracking-widest">Inversión del ticket promedio por semana</p>
+                    <div class="glass-card p-8 flex flex-col">
+                        <h3 class="text-sm font-black uppercase text-exitoBlack mb-6 tracking-wider">Hábitos de Gasto en el Mes</h3>
+                        <div class="relative flex-1 min-h-[350px] w-full"><canvas id="behaviorChart"></canvas></div>
+                        <p class="text-[10px] text-slate-400 text-center mt-6 font-bold uppercase tracking-widest">Inversión del ticket promedio por semana</p>
                     </div>
                 </div>
 
-                <div class="glass-card bg-exitoBlue p-8 border-0">
+                <div class="glass-card bg-exitoBlack p-10 border-0 border-t-8 border-exitoYellow">
                     <div class="flex justify-between items-center mb-8">
-                        <h3 class="text-2xl font-black uppercase text-exitoYellow tracking-tight"><i class="fas fa-lightbulb mr-2"></i> Oportunidades Detectadas por IA</h3>
+                        <h3 class="text-2xl font-black uppercase text-white tracking-tight"><i class="fas fa-lightbulb text-exitoYellow mr-3"></i> Oportunidades Detectadas por IA</h3>
                         <span class="bg-green-500 text-white text-xs font-black px-4 py-2 rounded-full animate-pulse tracking-widest uppercase">Escaneo Activo</span>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="bg-white rounded-xl p-6 border-t-8 border-exitoYellow shadow-lg">
-                            <h4 class="font-black text-exitoBlue text-lg mb-3"><i class="fas fa-box-open text-slate-300 mr-2 text-xl"></i> Suscripciones Aseo</h4>
-                            <p class="text-sm text-slate-600 mb-4 font-medium leading-relaxed"><strong>Dato Duro:</strong> 45% de la base fidelizada compra detergente y papel higiénico exactamente cada 60 días en la plataforma.</p>
-                            <div class="bg-blue-50 p-4 rounded-lg border border-blue-100 text-sm text-exitoBlue font-medium">
-                                <strong><i class="fas fa-robot text-blue-500 mr-1"></i> IA Acción:</strong> Crear programa "Éxito Suscripciones" con envío automático gratis para retener ese LTV de por vida.
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-lg">
+                            <h4 class="font-black text-exitoBlack text-lg mb-3"><i class="fas fa-box-open text-slate-300 mr-2 text-xl"></i> Suscripciones Aseo</h4>
+                            <p class="text-sm text-slate-600 mb-5 font-medium leading-relaxed"><strong>Dato Duro:</strong> 45% de la base fidelizada compra detergente y papel higiénico exactamente cada 60 días en la plataforma.</p>
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-sm text-slate-800 font-medium">
+                                <strong><i class="fas fa-robot text-exitoYellow bg-exitoBlack p-1 rounded-full mr-1"></i> IA Acción:</strong> Crear programa "Éxito Suscripciones" con envío automático gratis para retener ese LTV de por vida.
                             </div>
                         </div>
-                        <div class="bg-white rounded-xl p-6 border-t-8 border-exitoYellow shadow-lg">
-                            <h4 class="font-black text-exitoBlue text-lg mb-3"><i class="fas fa-laptop text-slate-300 mr-2 text-xl"></i> Kits Universitarios</h4>
-                            <p class="text-sm text-slate-600 mb-4 font-medium leading-relaxed"><strong>Dato Duro:</strong> Pico detectado (Agosto/Septiembre) de tráfico cruzado entre el pasillo de Tecnología y Snacks de paquete.</p>
-                            <div class="bg-blue-50 p-4 rounded-lg border border-blue-100 text-sm text-exitoBlue font-medium">
-                                <strong><i class="fas fa-robot text-blue-500 mr-1"></i> IA Acción:</strong> Armar "Combo U" (Portátil + Audífonos + Ancheta Snacks) financiado al 0% con Tarjeta Éxito.
+                        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-lg">
+                            <h4 class="font-black text-exitoBlack text-lg mb-3"><i class="fas fa-laptop text-slate-300 mr-2 text-xl"></i> Kits Universitarios</h4>
+                            <p class="text-sm text-slate-600 mb-5 font-medium leading-relaxed"><strong>Dato Duro:</strong> Pico detectado (Agosto/Septiembre) de tráfico cruzado entre el pasillo de Tecnología y Snacks de paquete.</p>
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-sm text-slate-800 font-medium">
+                                <strong><i class="fas fa-robot text-exitoYellow bg-exitoBlack p-1 rounded-full mr-1"></i> IA Acción:</strong> Armar "Combo U" (Portátil + Audífonos + Ancheta Snacks) financiado al 0% con Tarjeta Éxito.
                             </div>
                         </div>
-                        <div class="bg-white rounded-xl p-6 border-t-8 border-exitoYellow shadow-lg">
-                            <h4 class="font-black text-exitoBlue text-lg mb-3"><i class="fas fa-wine-glass-alt text-slate-300 mr-2 text-xl"></i> Licores Premium</h4>
-                            <p class="text-sm text-slate-600 mb-4 font-medium leading-relaxed"><strong>Dato Duro:</strong> Aumento inusual del 18% en búsqueda y compra de vinos de reserva importados durante los fines de semana.</p>
-                            <div class="bg-blue-50 p-4 rounded-lg border border-blue-100 text-sm text-exitoBlue font-medium">
-                                <strong><i class="fas fa-robot text-blue-500 mr-1"></i> IA Acción:</strong> Organizar catas de vino gratuitas los viernes por la noche en formatos Éxito Wow para generar compras impulsivas.
+                        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-lg">
+                            <h4 class="font-black text-exitoBlack text-lg mb-3"><i class="fas fa-wine-glass-alt text-slate-300 mr-2 text-xl"></i> Licores Premium</h4>
+                            <p class="text-sm text-slate-600 mb-5 font-medium leading-relaxed"><strong>Dato Duro:</strong> Aumento inusual del 18% en búsqueda y compra de vinos de reserva importados durante los fines de semana.</p>
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-sm text-slate-800 font-medium">
+                                <strong><i class="fas fa-robot text-exitoYellow bg-exitoBlack p-1 rounded-full mr-1"></i> IA Acción:</strong> Organizar catas de vino gratuitas los viernes por la noche en formatos Éxito Wow (Villavicencio y Bogotá) para generar compras impulsivas.
                             </div>
                         </div>
                     </div>
@@ -582,35 +591,35 @@
             <!-- ================= TAB 8: RRHH Y EMPLEADOS ================= -->
             <div id="tab-empleados" class="hidden space-y-8">
                 <header class="mb-6">
-                    <h3 class="text-3xl font-black text-exitoBlue tracking-tight">Gestión de Talento (RRHH)</h3>
+                    <h3 class="text-3xl font-black text-exitoBlack tracking-tight">Gestión de Talento (RRHH)</h3>
                     <p class="text-sm font-bold text-slate-500 mt-1">Satisfacción, productividad y estrategias de clima laboral.</p>
                 </header>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="glass-card p-6 border-l-4 border-green-500"><p class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-2">Satisfacción (eNPS)</p><p class="text-4xl font-black text-exitoBlue">72% <span class="text-sm font-bold text-green-500">Saludable</span></p></div>
-                    <div class="glass-card p-6 border-l-4 border-orange-500"><p class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-2">Rotación Mensual</p><p class="text-4xl font-black text-exitoBlue">2.1% <span class="text-sm font-bold text-slate-400">Prom.</span></p></div>
-                    <div class="glass-card p-6 border-l-4 border-exitoYellow"><p class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-2">Ausentismo</p><p class="text-4xl font-black text-exitoBlue">1.5% <span class="text-sm font-bold text-slate-400">Estable</span></p></div>
-                    <div class="glass-card p-6 border-l-4 border-exitoBlue"><p class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-2">Cumplimiento Metas</p><p class="text-4xl font-black text-exitoBlue">88% <span class="text-sm font-bold text-exitoBlue">Ventas</span></p></div>
+                    <div class="glass-card p-6 border-t-4 border-exitoBlack"><p class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-2">Satisfacción (eNPS)</p><p class="text-4xl font-black text-exitoBlack">72% <span class="text-sm font-bold text-green-500">Saludable</span></p></div>
+                    <div class="glass-card p-6 border-t-4 border-exitoBlack"><p class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-2">Rotación Mensual</p><p class="text-4xl font-black text-exitoBlack">2.1% <span class="text-sm font-bold text-slate-400">Prom.</span></p></div>
+                    <div class="glass-card p-6 border-t-4 border-exitoBlack"><p class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-2">Ausentismo</p><p class="text-4xl font-black text-exitoBlack">1.5% <span class="text-sm font-bold text-slate-400">Estable</span></p></div>
+                    <div class="glass-card p-6 border-t-4 border-exitoBlack"><p class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-2">Cumplimiento Metas</p><p class="text-4xl font-black text-exitoBlack">88% <span class="text-sm font-bold text-exitoBlack">Ventas</span></p></div>
                 </div>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div class="glass-card p-6 flex flex-col">
-                        <h3 class="text-sm font-black uppercase text-exitoBlue mb-6 tracking-wider">Productividad por Departamento</h3>
-                        <div class="relative flex-1 min-h-[300px] w-full"><canvas id="rrhhChart"></canvas></div>
+                    <div class="glass-card p-8 flex flex-col">
+                        <h3 class="text-sm font-black uppercase text-exitoBlack mb-6 tracking-wider">Productividad por Departamento</h3>
+                        <div class="relative flex-1 min-h-[350px] w-full"><canvas id="rrhhChart"></canvas></div>
                     </div>
-                    <div class="glass-card bg-exitoBlue p-8 border-0 flex flex-col">
-                        <div class="border-b border-exitoDarkBlue pb-4 mb-6 flex justify-between items-center">
+                    <div class="glass-card bg-exitoBlack p-8 border-0 flex flex-col">
+                        <div class="border-b border-slate-800 pb-5 mb-6 flex justify-between items-center">
                             <h3 class="text-xl font-black uppercase text-white tracking-tight"><i class="fas fa-brain text-exitoYellow mr-2"></i> Coaching IA</h3>
-                            <button onclick="document.getElementById('ia-rrhh-content').classList.remove('hidden')" class="bg-exitoYellow text-exitoBlue px-4 py-2 rounded-lg text-xs font-black shadow-md hover:bg-yellow-400 transition transform hover:scale-105">
+                            <button onclick="document.getElementById('ia-rrhh-content').classList.remove('hidden')" class="btn-primary px-4 py-2 text-xs shadow-md">
                                 <i class="fas fa-magic mr-1"></i> Analizar Clima
                             </button>
                         </div>
-                        <div id="ia-rrhh-content" class="hidden space-y-4 flex-1 flex flex-col justify-center">
-                            <div class="bg-white p-5 rounded-xl shadow-lg">
-                                <p class="font-black text-red-600 text-lg mb-2">Alerta en Cajas (Operaciones):</p>
-                                <p class="text-sm text-slate-700 font-medium">El estrés medido en personal dominical sube 40%. <strong class="text-exitoBlue">Estrategia IA:</strong> Rotación de turnos dinámicos cada 3 horas y compensación flexible.</p>
+                        <div id="ia-rrhh-content" class="hidden space-y-5 flex-1 flex flex-col justify-center">
+                            <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-100">
+                                <p class="font-black text-exitoRed text-lg mb-2">Alerta en Cajas (Operaciones):</p>
+                                <p class="text-sm text-slate-700 font-medium leading-relaxed">El estrés medido en personal dominical sube 40%. <strong class="text-exitoBlack">Estrategia IA:</strong> Rotación de turnos dinámicos cada 3 horas y compensación flexible.</p>
                             </div>
-                            <div class="bg-white p-5 rounded-xl shadow-lg">
+                            <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-100">
                                 <p class="font-black text-green-600 text-lg mb-2">Oportunidad Piso Ventas (Tecnología):</p>
-                                <p class="text-sm text-slate-700 font-medium">Alta motivación por comisiones cruzadas. <strong class="text-exitoBlue">Estrategia IA:</strong> Implementar Gamificación y dar bonos en Puntos Colombia al mejor asesor.</p>
+                                <p class="text-sm text-slate-700 font-medium leading-relaxed">Alta motivación por comisiones cruzadas. <strong class="text-exitoBlack">Estrategia IA:</strong> Implementar Gamificación y dar bonos en Puntos Colombia al mejor asesor.</p>
                             </div>
                         </div>
                     </div>
@@ -635,8 +644,7 @@
             const overlay = document.getElementById('api-loading-overlay');
             overlay.classList.remove('hidden');
             
-            // Simular carga asíncrona de BD (Fetch)
-            await new Promise(r => setTimeout(r, 1800));
+            await new Promise(r => setTimeout(r, 1500));
             
             populateFullData();
             
@@ -672,10 +680,10 @@
             const input = document.getElementById('chat-input');
             const content = document.getElementById('chat-content');
             if(!input.value) return;
-            content.innerHTML += `<div class="flex gap-3 flex-row-reverse"><div class="w-10 h-10 rounded-full bg-slate-800 text-white flex items-center justify-center flex-shrink-0 font-bold">GR</div><div class="bg-exitoYellow text-exitoBlue font-bold p-4 rounded-2xl rounded-tr-none shadow-md max-w-[80%]">${input.value}</div></div>`;
+            content.innerHTML += `<div class="flex gap-3 flex-row-reverse"><div class="w-10 h-10 rounded-full bg-exitoBlack text-white flex items-center justify-center flex-shrink-0 font-bold">GR</div><div class="bg-slate-100 text-slate-800 font-bold p-4 rounded-2xl rounded-tr-none shadow-sm max-w-[80%] border border-slate-200">${input.value}</div></div>`;
             input.value = '';
             setTimeout(() => {
-                content.innerHTML += `<div class="flex gap-3"><div class="w-10 h-10 rounded-full bg-exitoYellow text-exitoBlue flex items-center justify-center flex-shrink-0 shadow-md"><i class="fas fa-robot text-lg"></i></div><div class="bg-white p-4 rounded-2xl rounded-tl-none border border-slate-200 shadow-md text-sm font-medium text-slate-700 max-w-[85%] leading-relaxed">Procesando solicitud... Según la métrica actual, sugiero cruzar la base B2B con las alertas de stock estancado en el módulo de inventario.</div></div>`;
+                content.innerHTML += `<div class="flex gap-3"><div class="w-10 h-10 rounded-full bg-exitoYellow text-exitoBlack flex items-center justify-center flex-shrink-0 shadow-sm"><i class="fas fa-robot text-lg"></i></div><div class="bg-white p-4 rounded-2xl rounded-tl-none border border-slate-200 shadow-sm text-sm font-medium text-slate-700 max-w-[85%] leading-relaxed">Procesando solicitud... Según la métrica actual, sugiero cruzar la base B2B con las alertas de stock estancado en el módulo de inventario para forzar rotación.</div></div>`;
                 content.scrollTop = content.scrollHeight;
             }, 1200);
         }
@@ -686,8 +694,8 @@
             document.getElementById('c360-ltv').innerText = "$" + ltv + "M COP";
             document.getElementById('c360-rfm').innerText = type === "B2B" ? "Campeón (Volumen Alto)" : "Promedio (Recurrente)";
             document.getElementById('c360-churn').innerText = (type === "B2B" && name.includes("Asadero")) ? "85%" : (Math.floor(Math.random() * 20) + 5) + "%";
-            document.getElementById('c360-tickets').innerHTML = `<li class="flex justify-between border-b border-slate-100 pb-2"><span>Orden #8920 (Ayer)</span> <strong class="text-exitoBlue">$150,000</strong></li><li class="flex justify-between border-b border-slate-100 pb-2"><span>Orden #7411 (Hace 1 mes)</span> <strong class="text-exitoBlue">$210,000</strong></li><li class="flex justify-between border-b border-slate-100 pb-2"><span>Orden #6520 (Hace 3 meses)</span> <strong class="text-exitoBlue">$95,000</strong></li>`;
-            document.getElementById('c360-zoho').innerHTML = `<li class="text-red-600 font-bold bg-red-50 p-2 rounded"><i class="fas fa-ticket-alt mr-2"></i> Queja Activa: Retraso en entrega de congelados.</li><li class="text-slate-600 bg-slate-50 p-2 rounded mt-2"><i class="fas fa-headset mr-2"></i> Consulta de Puntos Col. (Resuelta)</li>`;
+            document.getElementById('c360-tickets').innerHTML = `<li class="flex justify-between border-b border-slate-100 pb-3"><span>Orden #8920 (Ayer)</span> <strong class="text-exitoBlack">$150,000</strong></li><li class="flex justify-between border-b border-slate-100 pb-3"><span>Orden #7411 (Hace 1 mes)</span> <strong class="text-exitoBlack">$210,000</strong></li><li class="flex justify-between border-b border-slate-100 pb-3"><span>Orden #6520 (Hace 3 meses)</span> <strong class="text-exitoBlack">$95,000</strong></li>`;
+            document.getElementById('c360-zoho').innerHTML = `<li class="text-exitoRed font-bold bg-red-50 p-3 rounded-lg border border-red-100"><i class="fas fa-ticket-alt mr-2"></i> Queja Activa: Retraso en entrega de congelados.</li><li class="text-slate-600 bg-slate-50 p-3 rounded-lg border border-slate-100 mt-2"><i class="fas fa-headset mr-2"></i> Consulta de Puntos Col. (Resuelta)</li>`;
             document.getElementById('c360-ai-action').innerText = name.includes("Asadero") ? "Alerta Crítica: Caída en compra de cárnicos detectada. Enviar cupón institucional de 15% off inmediato." : "Este cliente lleva 2 meses sin realizar compras cruzadas. Envíale un cupón de 20% en su categoría favorita.";
             document.getElementById('customer-360-modal').classList.remove('hidden');
         }
@@ -697,20 +705,20 @@
             setTimeout(() => {
                 document.getElementById('route-content').innerHTML = `
                     <i class="fas fa-check-circle text-7xl text-green-500 mb-6"></i>
-                    <h4 class="font-black text-2xl text-exitoBlue mb-3">Rutas Optimizadas Exitosamente</h4>
-                    <p class="text-sm text-slate-700 bg-green-50 p-4 border border-green-200 rounded-xl font-medium leading-relaxed shadow-inner">
-                        <strong><i class="fas fa-robot text-green-600 mr-1"></i> IA Result:</strong> Se reasignaron 15 camiones en Autonorte y se consolidó el 30% de carga en el sur.<br><br><strong>Ahorro proyectado de combustible: 18%.<br>Tiempo salvado: 42 mins por vehículo.</strong>
+                    <h4 class="font-black text-2xl text-exitoBlack mb-3">Rutas Optimizadas Exitosamente</h4>
+                    <p class="text-sm text-slate-700 bg-green-50 p-5 border border-green-200 rounded-xl font-medium leading-relaxed shadow-inner">
+                        <strong><i class="fas fa-robot text-green-600 mr-2 text-lg"></i>IA Result:</strong> Se reasignaron 15 camiones en Autonorte y se consolidó el 30% de carga en el sur.<br><br><strong>Ahorro proyectado de combustible: 18%.<br>Tiempo salvado: 42 mins por vehículo.</strong>
                     </p>
-                    <button onclick="closeModal('route-optimization-modal')" class="mt-6 bg-exitoBlue hover:bg-exitoDarkBlue text-white w-full py-4 rounded-xl font-black text-sm uppercase tracking-wide transition shadow-lg">Aplicar Nuevas Rutas a Flota GPS</button>
+                    <button onclick="closeModal('route-optimization-modal')" class="mt-6 btn-primary w-full py-4 text-sm uppercase tracking-wider shadow-lg">Aplicar Nuevas Rutas a Flota GPS</button>
                 `;
-            }, 3000);
+            }, 2500);
         }
 
         function analyzeCategoriesAI() {
             alert("RESUMEN ESTRATÉGICO IA (CATEGORÍAS):\n\n1. DESPENSA: Mantiene el core business (35% del volumen). Demanda inelástica y predecible.\n2. LICORES Y TECNOLOGÍA: Poseen los márgenes de ganancia más altos (Premiumización).\n3. OPORTUNIDAD: Cruzar ventas entre Fruver (Bajo ticket) y Cuidado Personal (Alto ticket) usando descuentos condicionados en Tarjeta Éxito.");
         }
 
-        // ================= LLENADO MASIVO DE DATOS (100% RESTAURADO) =================
+        // ================= LLENADO MASIVO DE DATOS =================
         function populateFullData() {
             // TOP 10 Productos
             const topProducts = [
@@ -726,10 +734,10 @@
                 {n: 'Jabón en Barra Rey', p: '5,500', d: '2,800', s: '18,000', img: 'https://images.unsplash.com/photo-1584820927498-cafe4c107f9e?w=100&q=80'}
             ];
             document.getElementById('top-10-list').innerHTML = topProducts.map(p => `
-                <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-200 flex items-center gap-4 hover:border-exitoYellow transition-colors group">
-                    <img src="${p.img}" class="w-14 h-14 rounded-lg object-cover border shadow-sm group-hover:scale-105 transition-transform">
-                    <div class="flex-1"><p class="text-sm font-bold text-slate-800 line-clamp-1">${p.n}</p><p class="text-base font-black text-green-600 mt-0.5">$${p.p}</p></div>
-                    <div class="text-right bg-slate-50 p-2 rounded-lg border border-slate-100"><p class="text-[10px] text-slate-500 uppercase font-bold tracking-wider mb-1">Dem: <span class="text-exitoBlue font-black text-xs">${p.d}</span></p><p class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Stock: <span class="text-slate-800 font-black text-xs">${p.s}</span></p></div>
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center gap-5 hover:border-exitoYellow transition-colors group">
+                    <img src="${p.img}" class="w-14 h-14 rounded-lg object-cover border border-slate-100 shadow-sm group-hover:scale-105 transition-transform">
+                    <div class="flex-1"><p class="text-sm font-bold text-slate-800 line-clamp-1">${p.n}</p><p class="text-base font-black text-green-600 mt-1">$${p.p}</p></div>
+                    <div class="text-right bg-slate-50 p-2.5 rounded-lg border border-slate-100"><p class="text-[10px] text-slate-500 uppercase font-bold tracking-wider mb-1">Dem: <span class="text-exitoBlack font-black text-xs">${p.d}</span></p><p class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Stock: <span class="text-slate-800 font-black text-xs">${p.s}</span></p></div>
                 </div>`).join('');
 
             // BOTTOM 10 Productos
@@ -746,13 +754,13 @@
                 {n: 'Máquina Cortar Pelo', p: '68,000', d: '0.4', s: '280', img: 'https://images.unsplash.com/photo-1599305090598-fe179d501227?w=100&q=80'}
             ];
             document.getElementById('bottom-10-list').innerHTML = bottomProducts.map(p => `
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-red-200 hover:border-red-500 transition-colors relative flex flex-col group">
-                    <div class="flex items-center gap-4 mb-3">
-                        <img src="${p.img}" class="w-12 h-12 rounded-lg object-cover border shadow-sm">
-                        <div class="flex-1"><p class="text-sm font-bold text-slate-800 line-clamp-1">${p.n}</p><p class="text-base font-black text-red-600 mt-0.5">$${p.p}</p></div>
-                        <div class="text-right bg-red-50 p-1.5 rounded border border-red-100"><p class="text-[10px] text-slate-600 font-bold">Dem: <span class="text-red-600">${p.d}</span></p><p class="text-[10px] text-slate-600 font-bold">Stock: ${p.s}</p></div>
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-red-200 hover:border-exitoRed transition-colors relative flex flex-col group">
+                    <div class="flex items-center gap-5 mb-4">
+                        <img src="${p.img}" class="w-14 h-14 rounded-lg object-cover border border-slate-100 shadow-sm">
+                        <div class="flex-1"><p class="text-sm font-bold text-slate-800 line-clamp-1">${p.n}</p><p class="text-base font-black text-exitoRed mt-1">$${p.p}</p></div>
+                        <div class="text-right bg-red-50 p-2 rounded-lg border border-red-100"><p class="text-[10px] text-slate-600 font-bold uppercase tracking-wider mb-1">Dem: <span class="text-exitoRed font-black text-xs">${p.d}</span></p><p class="text-[10px] text-slate-600 font-bold uppercase tracking-wider">Stock: <span class="text-slate-800 font-black text-xs">${p.s}</span></p></div>
                     </div>
-                    <button class="w-full bg-slate-800 hover:bg-exitoBlue text-white text-xs font-bold py-2 rounded-lg transition-colors flex items-center justify-center gap-2 shadow-sm"><i class="fab fa-hubspot text-orange-400"></i> Ejecutar Promo Hubspot</button>
+                    <button class="w-full btn-secondary text-xs py-2.5 flex items-center justify-center gap-2 shadow-sm"><i class="fab fa-hubspot text-exitoYellow text-sm"></i> Ejecutar Promo Hubspot</button>
                 </div>`).join('');
 
             // Patrones Minería (6)
@@ -765,9 +773,9 @@
                 {t: "Maquillaje + Desmaq.", c: "50%", i: "Bundling: Proveedores deben crear estuches promocionales conjuntos." }
             ];
             document.getElementById('patterns-container').innerHTML = patterns.map(p => `
-                <div class="border border-slate-200 rounded-xl p-4 bg-white shadow-sm hover:shadow-md transition">
-                    <p class="font-black text-base mb-3 text-exitoBlue flex justify-between items-center">${p.t} <span class="bg-blue-100 text-blue-800 text-[10px] px-2 py-1 rounded-full">${p.c} Corr.</span></p>
-                    <p class="text-xs text-slate-700 bg-slate-50 p-3 rounded-lg border border-slate-200 leading-relaxed font-medium"><strong><i class="fas fa-robot text-exitoBlue text-lg mr-1"></i> Estrategia IA:</strong> ${p.i}</p>
+                <div class="border border-slate-200 rounded-2xl p-5 bg-white shadow-sm hover:shadow-md transition">
+                    <p class="font-black text-base mb-4 text-exitoBlack flex justify-between items-center">${p.t} <span class="bg-slate-100 border border-slate-200 text-slate-700 text-[10px] px-3 py-1.5 rounded-full uppercase tracking-wider">${p.c} Corr.</span></p>
+                    <p class="text-sm text-slate-700 bg-slate-50 p-4 rounded-xl border border-slate-100 leading-relaxed font-medium"><strong><i class="fas fa-robot text-exitoYellow bg-exitoBlack p-1 rounded-full mr-2 text-lg"></i> Estrategia IA:</strong> ${p.i}</p>
                 </div>`).join('');
 
             // Categorías (9 Completas)
@@ -784,16 +792,16 @@
             ];
             document.getElementById('categories-container').innerHTML = cats.map(c => `
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-lg transition-shadow">
-                    <div class="h-28 bg-cover bg-center relative" style="background-image: url('${c.i}')">
-                        <div class="absolute inset-0 bg-exitoDarkBlue bg-opacity-80 flex items-center justify-center"><h4 class="text-exitoYellow font-black text-xl uppercase tracking-widest">${c.n}</h4></div>
+                    <div class="h-32 bg-cover bg-center relative" style="background-image: url('${c.i}')">
+                        <div class="absolute inset-0 bg-exitoBlack bg-opacity-70 flex items-center justify-center"><h4 class="text-white font-black text-2xl uppercase tracking-widest">${c.n}</h4></div>
                     </div>
-                    <div class="p-5">
+                    <div class="p-6">
                         <details class="group">
-                            <summary class="text-sm font-bold text-exitoBlue cursor-pointer bg-slate-50 p-3 rounded-xl border border-slate-200 flex justify-between items-center hover:bg-slate-100 transition-colors shadow-sm">
+                            <summary class="text-sm font-bold text-exitoBlack cursor-pointer bg-slate-50 p-4 rounded-xl border border-slate-200 flex justify-between items-center hover:bg-slate-100 transition-colors shadow-sm">
                                 Top Productos en Venta <i class="fas fa-chevron-down group-open:rotate-180 transition-transform"></i>
                             </summary>
-                            <ul class="text-xs mt-3 pl-1 pr-1 text-slate-700 font-medium bg-white border border-slate-100 rounded-lg shadow-inner overflow-hidden">
-                                ${c.p.map(prod => `<li class="flex justify-between items-center border-b border-slate-100 py-2.5 px-3 last:border-0 hover:bg-slate-50 transition-colors"><span>${prod.n}</span> <span class="font-black text-green-600">$${prod.v}</span></li>`).join('')}
+                            <ul class="text-sm mt-4 pl-1 pr-1 text-slate-700 font-medium bg-white border border-slate-100 rounded-xl shadow-inner overflow-hidden">
+                                ${c.p.map(prod => `<li class="flex justify-between items-center border-b border-slate-100 py-3 px-4 last:border-0 hover:bg-slate-50 transition-colors"><span>${prod.n}</span> <span class="font-black text-green-600">$${prod.v}</span></li>`).join('')}
                             </ul>
                         </details>
                     </div>
@@ -806,27 +814,27 @@
                 {t: "FELICITACIÓN", txt: "El pan francés recién salido es genial.", z: "Cali", c: "green", i: "fa-star"},
                 {t: "SUGERENCIA", txt: "Abran más cajas los domingos.", z: "Medellín", c: "orange", i: "fa-lightbulb"},
                 {t: "RECLAMO", txt: "Me cobraron doble un producto.", z: "Bucaramanga", c: "red", i: "fa-exclamation-circle"},
-                {t: "PETICIÓN", txt: "Traigan más leches Taeq.", z: "Bogotá", c: "blue", i: "fa-hand-paper"},
-                {t: "QUEJA", txt: "La app se cierra al pagar.", z: "Nacional", c: "red", i: "fa-times-circle"},
-                {t: "FELICITACIÓN", txt: "Buena asesoría en televisores.", z: "Barranquilla", c: "green", i: "fa-star"},
+                {t: "PETICIÓN", txt: "Traigan más leches vegetales Taeq.", z: "Bogotá", c: "blue", i: "fa-hand-paper"},
+                {t: "QUEJA", txt: "La app se cierra al pagar con TC.", z: "Nacional", c: "red", i: "fa-times-circle"},
+                {t: "FELICITACIÓN", txt: "Excelente asesoría en televisores.", z: "Barranquilla", c: "green", i: "fa-star"},
                 {t: "SUGERENCIA", txt: "Faltan canastillas en la entrada.", z: "Cartagena", c: "orange", i: "fa-lightbulb"},
-                {t: "RECLAMO", txt: "Descuento no pasó en caja.", z: "Cali", c: "red", i: "fa-exclamation-circle"},
-                {t: "PETICIÓN", txt: "Habiliten parqueadero bicis.", z: "Bogotá", c: "blue", i: "fa-hand-paper"},
-                {t: "QUEJA", txt: "No había stock promo atún.", z: "Pereira", c: "red", i: "fa-times-circle"},
+                {t: "RECLAMO", txt: "Descuento no pasó en caja registradora.", z: "Cali", c: "red", i: "fa-exclamation-circle"},
+                {t: "PETICIÓN", txt: "Habiliten parqueadero para bicicletas.", z: "Bogotá", c: "blue", i: "fa-hand-paper"},
+                {t: "QUEJA", txt: "No había stock de la promo de atún.", z: "Pereira", c: "red", i: "fa-times-circle"},
                 {t: "FELICITACIÓN", txt: "Baños muy limpios siempre.", z: "Medellín", c: "green", i: "fa-star"},
                 {t: "SUGERENCIA", txt: "Mejoren luz en sótano.", z: "Villavicencio", c: "orange", i: "fa-lightbulb"},
                 {t: "RECLAMO", txt: "No dejaron entrar perro guía.", z: "Bogotá", c: "red", i: "fa-exclamation-circle"},
-                {t: "PETICIÓN", txt: "Más cajeros Bancolombia.", z: "Manizales", c: "blue", i: "fa-hand-paper"},
-                {t: "QUEJA", txt: "Frutas mayugadas online.", z: "Cali", c: "red", i: "fa-times-circle"},
-                {t: "FELICITACIÓN", txt: "Buen layout de tienda.", z: "Bucaramanga", c: "green", i: "fa-star"},
-                {t: "SUGERENCIA", txt: "Música muy fuerte en tienda.", z: "Bogotá", c: "orange", i: "fa-lightbulb"},
-                {t: "RECLAMO", txt: "Factura electrónica no llegó.", z: "Nac.", c: "red", i: "fa-exclamation-circle"},
+                {t: "PETICIÓN", txt: "Más cajeros Bancolombia adentro.", z: "Manizales", c: "blue", i: "fa-hand-paper"},
+                {t: "QUEJA", txt: "Frutas mayugadas en pedido online.", z: "Cali", c: "red", i: "fa-times-circle"},
+                {t: "FELICITACIÓN", txt: "Buen layout de tienda, fácil ubicar todo.", z: "Bucaramanga", c: "green", i: "fa-star"},
+                {t: "SUGERENCIA", txt: "Música muy fuerte en la tienda.", z: "Bogotá", c: "orange", i: "fa-lightbulb"},
+                {t: "RECLAMO", txt: "Factura electrónica no llegó al email.", z: "Nac.", c: "red", i: "fa-exclamation-circle"},
                 {t: "PETICIÓN", txt: "Abran hasta 10 PM los domingos.", z: "Medellín", c: "blue", i: "fa-hand-paper"}
             ];
             document.getElementById('pqrs-container').innerHTML = pqs.map(q => `
-                <div class="p-4 bg-${q.c}-50 border-l-4 border-${q.c}-500 rounded-xl shadow-sm hover:shadow-md transition">
-                    <p class="font-black text-${q.c}-700 text-sm mb-1 uppercase tracking-wide"><i class="fas ${q.i} mr-1"></i> ${q.t}</p>
-                    <p class="text-sm text-slate-700 font-medium">"${q.txt}" <span class="text-[10px] text-slate-500 font-bold bg-white px-2 py-0.5 rounded ml-2 shadow-sm border border-slate-100">${q.z}</span></p>
+                <div class="p-5 bg-white border-l-4 border-${q.c}-500 rounded-xl shadow-sm hover:shadow-md transition">
+                    <p class="font-black text-${q.c}-600 text-sm mb-2 uppercase tracking-wider"><i class="fas ${q.i} mr-2"></i> ${q.t}</p>
+                    <p class="text-sm text-slate-700 font-medium leading-relaxed">"${q.txt}" <span class="text-[10px] text-slate-500 font-bold bg-slate-50 px-2.5 py-1 rounded ml-2 border border-slate-100">${q.z}</span></p>
                 </div>`).join('');
 
             // Clientes CRM Table (25 Completos)
@@ -842,10 +850,10 @@
                 let type = n.includes("(B2B)") ? "B2B" : "B2C";
                 let ltv = (Math.random()*(25-2)+2).toFixed(1);
                 let cleanName = n.replace(/\(.*\)/, '').trim();
-                let icon = type === "B2B" ? "fa-building text-blue-400" : "fa-user text-slate-400";
+                let icon = type === "B2B" ? "fa-building text-blue-500" : "fa-user text-slate-400";
                 return `<tr class="border-b border-slate-100 clickable-row" onclick="openCustomer360('${cleanName}', '${type}', '${ltv}')">
                     <td class="p-4 font-bold text-slate-800 text-sm"><i class="fas ${icon} mr-3"></i>${cleanName}</td>
-                    <td class="p-4"><span class="${type==='B2B'?'bg-exitoBlue text-white':'bg-slate-200 text-slate-800'} px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase shadow-sm">${type}</span></td>
+                    <td class="p-4"><span class="${type==='B2B'?'bg-exitoBlack text-white':'bg-slate-100 text-slate-800 border border-slate-200'} px-3 py-1.5 rounded-full text-[10px] font-black tracking-widest uppercase shadow-sm">${type}</span></td>
                     <td class="p-4 text-right font-black text-green-600 text-sm">$${ltv}M</td>
                 </tr>`;
             }).join('');
@@ -856,13 +864,12 @@
             Chart.defaults.font.family = 'Inter, sans-serif';
             Chart.defaults.color = '#64748b';
             
-            // Opciones Globales Premium
             const gOpt = { 
                 responsive: true, maintainAspectRatio: false, 
                 animation: { duration: 1500, easing: 'easeOutQuart' }, 
                 plugins: { 
-                    legend: { labels: { font: { weight: 'bold' } } },
-                    tooltip: { backgroundColor: '#001A3A', titleFont: { size: 14, family: 'Inter' }, bodyFont: { size: 13, family: 'Inter' }, padding: 12, cornerRadius: 8, displayColors: true }
+                    legend: { labels: { font: { weight: 'bold', family: 'Inter' } } },
+                    tooltip: { backgroundColor: '#000000', titleFont: { size: 14, family: 'Inter' }, bodyFont: { size: 13, family: 'Inter' }, padding: 12, cornerRadius: 8, displayColors: true }
                 }, 
                 scales: { 
                     y: { grid: { color: 'rgba(226, 232, 240, 0.6)', borderDash: [5, 5] }, border: { display: false } }, 
@@ -873,19 +880,19 @@
             const gOptPie = { ...gOpt, scales: { x: {display: false}, y: {display: false} } };
 
             // 1. Promo
-            new Chart(document.getElementById('promoChart').getContext('2d'), { type: 'bar', data: { labels: ['Sem 1', 'Sem 2', 'Sem 3 (Ofertas)'], datasets: [{ label: 'Precio Base', data: [1.2, 1.1, 0.4], backgroundColor: '#002B5E', borderRadius: 6 }, { label: 'Promo', data: [0.1, 0.2, 2.9], backgroundColor: '#FFE600', borderRadius: 6 }]}, options: gOpt });
+            new Chart(document.getElementById('promoChart').getContext('2d'), { type: 'bar', data: { labels: ['Sem 1', 'Sem 2', 'Sem 3 (Ofertas)'], datasets: [{ label: 'Precio Base', data: [1.2, 1.1, 0.4], backgroundColor: '#1A1A1A', borderRadius: 6 }, { label: 'Promo', data: [0.1, 0.2, 2.9], backgroundColor: '#FFE600', borderRadius: 6 }]}, options: gOpt });
             
             // 2. Forecasting
             let ctxM = document.getElementById('monthlyChart').getContext('2d');
-            let g1 = ctxM.createLinearGradient(0,0,0,300); g1.addColorStop(0, 'rgba(0, 43, 94, 0.2)'); g1.addColorStop(1, 'rgba(0,0,0,0)');
+            let g1 = ctxM.createLinearGradient(0,0,0,300); g1.addColorStop(0, 'rgba(0, 0, 0, 0.2)'); g1.addColorStop(1, 'rgba(0,0,0,0)');
             let g2 = ctxM.createLinearGradient(0,0,0,300); g2.addColorStop(0, 'rgba(139, 92, 246, 0.2)'); g2.addColorStop(1, 'rgba(0,0,0,0)');
-            new Chart(ctxM, { type: 'line', data: { labels: ['May', 'Jun', 'Jul', 'Ago', 'Sep (Hoy)', 'Oct (IA)', 'Nov (IA)'], datasets: [{ label: 'Real', data: [3.8, 4.4, 4.0, 3.8, 4.2, null, null], borderColor: '#002B5E', backgroundColor: g1, fill: true, tension: 0.4, borderWidth: 3, pointRadius: 4 }, { label: 'Pronóstico IA', data: [null, null, null, null, 4.2, 4.9, 5.5], borderColor: '#8B5CF6', backgroundColor: g2, fill: true, tension: 0.4, borderDash: [5,5], borderWidth: 3, pointRadius: 4 }]}, options: gOpt });
+            new Chart(ctxM, { type: 'line', data: { labels: ['May', 'Jun', 'Jul', 'Ago', 'Sep (Hoy)', 'Oct (IA)', 'Nov (IA)'], datasets: [{ label: 'Real', data: [3.8, 4.4, 4.0, 3.8, 4.2, null, null], borderColor: '#000000', backgroundColor: g1, fill: true, tension: 0.4, borderWidth: 3, pointRadius: 4 }, { label: 'Pronóstico IA', data: [null, null, null, null, 4.2, 4.9, 5.5], borderColor: '#8B5CF6', backgroundColor: g2, fill: true, tension: 0.4, borderDash: [5,5], borderWidth: 3, pointRadius: 4 }]}, options: gOpt });
 
-            // 3. Categorías (Bar)
-            new Chart(document.getElementById('categoriesChart').getContext('2d'), { type: 'bar', data: { labels: ['Despensa', 'Licores', 'Tecnología', 'Aseo', 'Fruver'], datasets: [{ label: 'Participación Ventas (%)', data: [35, 20, 25, 10, 10], backgroundColor: ['#FFE600', '#002B5E', '#8B5CF6', '#10B981', '#F59E0B'], borderRadius: 6 }]}, options: gOpt });
+            // 3. Categorías
+            new Chart(document.getElementById('categoriesChart').getContext('2d'), { type: 'bar', data: { labels: ['Despensa', 'Licores', 'Tecnología', 'Aseo', 'Fruver'], datasets: [{ label: 'Participación Ventas (%)', data: [35, 20, 25, 10, 10], backgroundColor: ['#FFE600', '#000000', '#8B5CF6', '#10B981', '#E30613'], borderRadius: 6 }]}, options: gOpt });
 
             // 4. Puntos
-            new Chart(document.getElementById('puntosChart').getContext('2d'), { type: 'doughnut', data: { labels: ['B2C', 'B2B'], datasets: [{ data: [73.4, 26.6], backgroundColor: ['#FFE600', '#002B5E'], borderWidth: 0, hoverOffset: 4 }]}, options: { ...gOptPie, cutout: '75%' } });
+            new Chart(document.getElementById('puntosChart').getContext('2d'), { type: 'doughnut', data: { labels: ['B2C', 'B2B'], datasets: [{ data: [73.4, 26.6], backgroundColor: ['#FFE600', '#000000'], borderWidth: 0, hoverOffset: 4 }]}, options: { ...gOptPie, cutout: '75%' } });
             
             // 5. Logística
             let ctxL = document.getElementById('logisticsChart').getContext('2d');
@@ -893,19 +900,19 @@
             new Chart(ctxL, { type: 'line', data: { labels: ['6am', '9am', '12pm', '3pm', '6pm', '9pm'], datasets: [{ label: 'Volumen Entregas', data: [150, 420, 320, 580, 850, 200], borderColor: '#10B981', backgroundColor: g3, fill: true, tension: 0.4, borderWidth: 3 }]}, options: gOpt });
             
             // 6. Geo
-            new Chart(document.getElementById('geoChart').getContext('2d'), { type: 'bar', data: { labels: ['Bogotá', 'Medellín', 'Cali', 'Villavicencio'], datasets: [{ label: 'Millones COP', data: [1200, 850, 620, 310], backgroundColor: ['#FFE600', '#002B5E', '#3B82F6', '#9CA3AF'], borderRadius: 6 }]}, options: { ...gOpt, plugins: { legend: { display: false } } } });
+            new Chart(document.getElementById('geoChart').getContext('2d'), { type: 'bar', data: { labels: ['Bogotá', 'Medellín', 'Cali', 'Villavicencio'], datasets: [{ label: 'Millones COP', data: [1200, 850, 620, 310], backgroundColor: ['#FFE600', '#000000', '#E30613', '#9CA3AF'], borderRadius: 6 }]}, options: { ...gOpt, plugins: { legend: { display: false } } } });
             
             // 7. Orders
-            new Chart(document.getElementById('ordersChart').getContext('2d'), { type: 'pie', data: { labels: ['A Tiempo', 'Retraso', 'Canceladas'], datasets: [{ data: [85, 12, 3], backgroundColor: ['#10B981', '#F59E0B', '#EF4444'], borderWidth: 0, hoverOffset: 4 }]}, options: { ...gOptPie, plugins: { legend: { position: 'right' } } } });
+            new Chart(document.getElementById('ordersChart').getContext('2d'), { type: 'pie', data: { labels: ['A Tiempo', 'Retraso', 'Canceladas'], datasets: [{ data: [85, 12, 3], backgroundColor: ['#10B981', '#F59E0B', '#E30613'], borderWidth: 0, hoverOffset: 4 }]}, options: { ...gOptPie, plugins: { legend: { position: 'right' } } } });
             
-            // 8. Trends (Doughnut en lugar de Polar para mayor elegancia)
-            new Chart(document.getElementById('trendsChart').getContext('2d'), { type: 'doughnut', data: { labels: ['Ecológicos', 'Taeq', 'Premium', 'Hogar'], datasets: [{ data: [35, 30, 20, 15], backgroundColor: ['#10B981', '#FFE600', '#002B5E', '#8B5CF6'], borderWidth: 0, hoverOffset: 5 }]}, options: { ...gOptPie, cutout: '65%', plugins: { legend: { position: 'right' } } } });
+            // 8. Trends (Doughnut)
+            new Chart(document.getElementById('trendsChart').getContext('2d'), { type: 'doughnut', data: { labels: ['Ecológicos', 'Taeq', 'Premium', 'Hogar'], datasets: [{ data: [35, 30, 20, 15], backgroundColor: ['#10B981', '#FFE600', '#000000', '#8B5CF6'], borderWidth: 0, hoverOffset: 5 }]}, options: { ...gOptPie, cutout: '65%', plugins: { legend: { position: 'right' } } } });
             
             // 9. Behavior (Stacked Bar)
-            new Chart(document.getElementById('behaviorChart').getContext('2d'), { type: 'bar', data: { labels: ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4'], datasets: [{ label: 'Canasta Básica', data: [50, 40, 30, 25], backgroundColor: '#002B5E', borderRadius: 4 }, { label: 'Electrónica', data: [35, 15, 10, 5], backgroundColor: '#8B5CF6', borderRadius: 4 }, { label: 'Licores/Snacks', data: [15, 45, 60, 70], backgroundColor: '#FFE600', borderRadius: 4 }]}, options: { ...gOpt, scales: { x: { stacked: true, grid: {display: false} }, y: { stacked: true, grid: { borderDash: [5,5] } } } } });
+            new Chart(document.getElementById('behaviorChart').getContext('2d'), { type: 'bar', data: { labels: ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4'], datasets: [{ label: 'Canasta Básica', data: [50, 40, 30, 25], backgroundColor: '#000000', borderRadius: 4 }, { label: 'Electrónica', data: [35, 15, 10, 5], backgroundColor: '#8B5CF6', borderRadius: 4 }, { label: 'Licores/Snacks', data: [15, 45, 60, 70], backgroundColor: '#FFE600', borderRadius: 4 }]}, options: { ...gOpt, scales: { x: { stacked: true, grid: {display: false} }, y: { stacked: true, grid: { borderDash: [5,5] } } } } });
             
             // 10. RRHH
-            new Chart(document.getElementById('rrhhChart').getContext('2d'), { type: 'bar', data: { labels: ['Cajas', 'Piso Ventas', 'Bodega', 'Atención Cliente'], datasets: [{ label: 'Productividad (%)', data: [85, 92, 78, 88], backgroundColor: '#002B5E', borderRadius: 6 }]}, options: { ...gOpt, indexAxis: 'y' } });
+            new Chart(document.getElementById('rrhhChart').getContext('2d'), { type: 'bar', data: { labels: ['Cajas', 'Piso Ventas', 'Bodega', 'Atención Cliente'], datasets: [{ label: 'Productividad (%)', data: [85, 92, 78, 88], backgroundColor: '#000000', borderRadius: 6 }]}, options: { ...gOpt, indexAxis: 'y' } });
         }
     </script>
 </body>
